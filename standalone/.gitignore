@@ -1,0 +1,6 @@
+node_modules/
+dist/
+src/assets.generated.ts
+src/main.generated.ts
+data/
+*.sqlite*

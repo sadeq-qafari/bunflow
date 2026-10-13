@@ -2,12 +2,6 @@ import {boot} from 'quasar/wrappers'
 import * as signalR from '@microsoft/signalr'
 import {Notify} from 'quasar'
 
-declare module 'vue/types/vue' {
-  interface Vue {
-    $ws: signalR.HubConnection;
-  }
-}
-
 const connection = new signalR.HubConnectionBuilder()
   .withUrl(process.env.API_URL + "/core/ws/notification")
   .configureLogging(signalR.LogLevel.Information)
@@ -34,9 +28,8 @@ connection.on("test", args => {
   console.log('test is called', args)
 })
 
-export default boot(async ({Vue, app, store, router}) => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-  Vue.prototype.$ws = connection
+export default boot(async ({ app }) => {
+  app.config.globalProperties.$ws = connection
 
   await start();
 })

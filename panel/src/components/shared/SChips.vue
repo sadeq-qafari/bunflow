@@ -1,13 +1,13 @@
-﻿<template>
+<template>
   <q-select outlined
             :dense="dense"
             multiple
             use-input
             use-chips
             input-debounce="500"
-            :value="valueObject"
+            :model-value="valueObject"
             v-bind="$attrs"
-            @input="onInput"
+            @update:model-value="onInput"
             :options="localOptions"
             @filter="filterFn"
             @filter-abort="abortFilterFn"

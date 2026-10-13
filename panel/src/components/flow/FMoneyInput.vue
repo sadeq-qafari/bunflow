@@ -1,5 +1,5 @@
-﻿<template>
-  <q-input v-else :value="moneyValue" class="col" v-bind="$attrs" outlined dense @input="onInput($event)"
+<template>
+  <q-input :model-value="moneyValue" class="col" v-bind="$attrs" outlined dense @update:model-value="onInput($event)"
            @click="selectItem()"/>
 </template>
 
@@ -7,11 +7,11 @@
 export default {
   name: "FMoneyInput",
   props: {
-    value: Object | null
+    modelValue: Object | null
   },
   computed: {
     moneyValue() {
-      return this.value?.replace(/\B(?=(\d{3})+(?!\d))/g, ",") || ''
+      return this.modelValue?.replace(/\B(?=(\d{3})+(?!\d))/g, ",") || ''
     }
   },
   methods: {
@@ -19,7 +19,7 @@ export default {
       this.$emit('select-item')
     },
     onInput(event) {
-      this.$emit('input', event?.split(',').join(''))
+      this.$emit('update:modelValue', event?.split(',').join(''))
     }
   }
 }

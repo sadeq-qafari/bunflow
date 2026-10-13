@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <q-page class="q-pa-md column">
     <q-card flat>
       <q-card-section class="q-pa-none">

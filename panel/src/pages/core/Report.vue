@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import {defineComponent, ref} from '@vue/composition-api'
+import {defineComponent, ref} from 'vue'
 import SDataGrid from "components/shared/SDataGrid.vue";
 
 export default defineComponent({

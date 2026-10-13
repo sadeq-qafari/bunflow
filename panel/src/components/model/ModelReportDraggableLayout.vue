@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div>
     <div class="full-width">
       <div class="row q-py-md q-gutter-md">
@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import {GridLayout, GridItem} from "vue-grid-layout"
+import {GridLayout, GridItem} from "grid-layout-plus"
 
 let mouseXY = {"x": null, "y": null};
 let DragPos = {"x": null, "y": null, "w": 1, "h": 1, "i": null};
@@ -91,7 +91,7 @@ export default {
       mouseXY.y = e.clientY;
     }, false);
   },
-  beforeDestroy() {
+  beforeUnmount() {
   },
   methods: {
     drag: function (e) {

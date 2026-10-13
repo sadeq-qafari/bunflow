@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <q-card bordered class="border-radius q-my-md no-shadow">
     <q-card-section>
       <div class="text-h6">رویداد های تور</div>

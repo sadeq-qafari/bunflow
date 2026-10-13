@@ -1,6 +1,6 @@
 # Flow standalone
 
-An alternative backend for Flow's existing Vue 2 / Quasar panel. A single Bun executable serves the compiled panel, provides its core API contracts, and stores definitions, records, sessions, import previews, and uploaded files in SQLite. SQL Server, Redis, .NET, the gateway, and the other services are not needed for this mode.
+An alternative backend for Flow's Vue 3 / Quasar 2 panel. A single Bun executable serves the compiled panel, provides its core API contracts, and stores definitions, records, sessions, import previews, and uploaded files in SQLite. SQL Server, Redis, .NET, the gateway, and the other services are not needed for this mode.
 
 ## Run the Linux x64 executable
 
@@ -26,6 +26,7 @@ Development/build dependencies are Bun and Node/npm. From this archive's `source
 ```sh
 cd panel
 npm ci --legacy-peer-deps --ignore-scripts
+npm run typecheck
 cd ../standalone
 bun install --frozen-lockfile
 bun test
@@ -77,8 +78,8 @@ This replaces the **core datastore flows**, not every service in the old framewo
 - Custom action definitions can be preserved, but this backend does not execute arbitrary client/server scripts. The original panel's preset/custom action buttons already lack action handlers in `FormView.vue`.
 - The generated element catalog covers the input components actually used by Flow: text, textarea, number, option/related selection, multiple selection, checkbox, money, date, time, and email. Extra elements from an existing database need mapping during migration.
 
-The panel's layout and screen structure are preserved. Its small compatibility changes are limited to standalone API routing, metadata loading after authentication, accepting `admin` in the formerly numeric-only login input, refreshing form definitions after saves, disabling external automatic error reporting in standalone mode, and repairing the existing Webpack 4/Babel build.
+The panel's layout and screen structure are preserved. The Vue 3 migration uses Vue's compatibility mode while updating Quasar components, routing, store/i18n setup, editor and grid packages, and component models. Standalone compatibility also includes API routing, metadata loading after authentication, accepting `admin` in the formerly numeric-only login input, refreshing form definitions after saves, disabling external automatic error reporting in standalone mode, and upgrading the Webpack build configuration.
 
 ## Validation
 
-The backend integration suite exercises authentication/refresh, Vue bootstrap contracts, static history routing, record/form CRUD, field renames, required/unique/type validation, relationship lookups and delete constraints, Excel preview/export/batch rollback, stale previews, schema/data round trips, and schema evolution conflicts. The Linux executable is also checked in a browser using the existing login, form designer, record form, and grid screens.
+The panel type check and production SPA build, plus the backend integration suite, cover the Vue 3/Quasar 2 upgrade. The Linux executable is checked in a browser using login, the dashboard, form designer, record form, and grid screens.

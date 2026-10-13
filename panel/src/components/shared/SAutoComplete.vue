@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <q-select :outlined="outlined"
             :borderless="borderless"
             :dense="dense"
@@ -7,9 +7,9 @@
             hide-selected
             fill-input
             input-debounce="500"
-            :value="valueObject"
+            :model-value="valueObject"
             v-bind="$attrs"
-            @input="onInput"
+            @update:model-value="onInput"
             :options="localOptions"
             @filter="filterFn"
             @filter-abort="abortFilterFn"

@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <canvas :id="id"></canvas>
 </template>
 

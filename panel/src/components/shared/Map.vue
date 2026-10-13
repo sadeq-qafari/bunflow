@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div :id="mapId" class="block full-width full-height" style="width: 100%; height: 100%;"></div>
 </template>
 

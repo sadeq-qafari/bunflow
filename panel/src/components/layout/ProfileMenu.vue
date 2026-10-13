@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="row justify-center items-center">
     <q-btn class="col-auto"
            dense
@@ -112,7 +112,7 @@
               </div>
 
               <!-- toggle -->
-              <q-toggle :value="classicMenu" dense @input="switchMenu()"/>
+              <q-toggle :model-value="classicMenu" dense @update:model-value="switchMenu()"/>
 
             </div>
 
@@ -146,7 +146,7 @@ export default {
       return this.$store.state.tenants && this.$store.state.tenants.filter(x => x.baseUrls?.Panel != location.origin).map(x => Object.assign({}, x, x.logo?.fileName != null ? {logo: `${this.baseUrl}/cdn/download/${x.logo.fileName}`} : {logo: 'icons/tenant-logo.png'}))
     },
     userInfo() {
-      return Object.assign({}, this.$store.state.user || {}, {profileImage: 'img/account-default-image.png'})
+      return Object.assign({}, this.$store.state.user || {}, {profileImage: '/img/account-default-image.png'})
     }
   },
   methods: {

@@ -1,15 +1,15 @@
-﻿<template>
+<template>
   <div class="flex row justify-start">
     <q-input :label="label" :outlined="outlined" :borderless="borderless" :placeholder="placeholder" :dense="dense"
              :rules="rules" ref="component"
-             :value="dateModel && dateModel.substring(0, 10)" @input="onInputManual($event,'date')"
+             :model-value="dateModel && dateModel.substring(0, 10)" @update:model-value="onInputManual($event,'date')"
              :class="['col-12', type==='datetime' && 'col-sm-6']"
              v-if="type==='datetime' || type==='date'" clearable @clear="$emit('input',null)" v-bind="$attrs">
       <template v-slot:prepend v-if="type==='datetime' || type==='date'">
         <q-icon name="event" class="cursor-pointer">
           <q-popup-proxy transition-show="scale" transition-hide="scale" ref="datePicker">
-            <q-date :calendar="locale.toLowerCase() == 'fa-ir' ? 'persian' : 'english'" :value="dateModel"
-                    @input="onInput($event,'date')">
+            <q-date :calendar="locale.toLowerCase() == 'fa-ir' ? 'persian' : 'english'" :model-value="dateModel"
+                    @update:model-value="onInput($event,'date')">
               <div class="row items-center justify-end">
                 <q-btn v-close-popup label="بستن" color="primary" flat/>
               </div>
@@ -21,13 +21,13 @@
 
     <q-input :label="label" :outlined="outlined" :borderless="borderless" :placeholder="placeholder" :dense="dense"
              :rules="rules"
-             :value="timeModel" @input="onInputManual($event,'time')" ref="component" v-bind="$attrs"
+             :model-value="timeModel" @update:model-value="onInputManual($event,'time')" ref="component" v-bind="$attrs"
              :class="['col-12', type==='datetime' && 'col-sm-6']" clearable @clear="$emit('input',null)"
              v-if="type==='datetime' || type==='time'">
       <template v-slot:prepend v-if="type==='datetime' || type==='time'">
         <q-icon name="access_time" class="cursor-pointer">
           <q-popup-proxy transition-show="scale" transition-hide="scale" ref="timePicker">
-            <q-time :value="dateModel" @input="onInput($event,'time')" mask="YYYY-MM-DD HH:mm:ss" format24h>
+            <q-time :model-value="dateModel" @update:model-value="onInput($event,'time')" mask="YYYY-MM-DD HH:mm:ss" format24h>
               <div class="row items-center justify-end">
                 <q-btn v-close-popup label="بستن" color="primary" flat/>
               </div>

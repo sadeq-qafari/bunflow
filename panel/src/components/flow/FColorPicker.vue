@@ -1,18 +1,18 @@
-﻿<template>
+<template>
   <div :class="['full-width',!flat?'rounded-borders border-solid bg-white':'']">
     <div class="row q-gutter-x-xs items-stretch">
 
       <!-- hex -->
-      <q-input :value="value" v-bind="$attrs" class="col" dir="ltr" borderless dense @input="$emit('input', $event)"/>
+      <q-input :model-value="modelValue" v-bind="$attrs" class="col" dir="ltr" borderless dense @update:model-value="$emit('update:modelValue', $event)"/>
 
       <!-- color picker -->
       <div class="col-auto q-pa-xs">
-        <q-btn class="full-width rounded-borders" :style="{color: value}" icon="palette"
+        <q-btn class="full-width rounded-borders" :style="{color: modelValue}" icon="palette"
                flat dense>
           <q-popup-proxy anchor="center start" self="center end">
-            <q-color :value="value" default-view="palette"
+            <q-color :model-value="modelValue" default-view="palette"
                      :palette="colors"
-                     no-footer no-header-tabs flat @input="$emit('input', $event)"/>
+                     no-footer no-header-tabs flat @update:model-value="$emit('update:modelValue', $event)"/>
           </q-popup-proxy>
         </q-btn>
       </div>
@@ -25,7 +25,7 @@
 export default {
   name: "FColorPicker",
   props: {
-    value: {
+    modelValue: {
       type: String,
       default: '#0ea5e9'
     },

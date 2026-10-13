@@ -1,6 +1,6 @@
-import {RouteConfig} from 'vue-router'
+import type { RouteRecordRaw } from 'vue-router'
 
-const routes: RouteConfig[] = [
+const routes: RouteRecordRaw[] = [
   {
     path: '',
     redirect: '/flow'
@@ -56,7 +56,7 @@ const routes: RouteConfig[] = [
   // Always leave this as last one,
   // but you can also remove it
   {
-    path: '*',
+    path: '/:pathMatch(.*)*',
     component: () => import('pages/Error404.vue')
   }
 ]

@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="row">
     <!-- loading state -->
     <q-skeleton v-if="loading" type="rect" class="col bg-grey-3" height="40px"/>
@@ -32,13 +32,13 @@ export default {
       return {
         ...this.formProps,
         loading: this.loading,
-        value: this.getValue(this.value),
+        modelValue: this.getValue(this.modelValue),
       }
     }
   },
   props: {
     propertyId: Number,
-    value: Object | String | Number | Array | Boolean | null,
+    modelValue: Object | String | Number | Array | Boolean | null,
     loading: {
       type: Boolean,
       default: false
@@ -78,7 +78,7 @@ export default {
         ...elementConfig
       }
       this.events = {
-        input: (val) => this.onInput(val),
+        'update:modelValue': (val) => this.onInput(val),
         ...this.getElementEvents()
       }
     },
@@ -112,7 +112,7 @@ export default {
 
     onInput(val) {
       // console.log('input', val)
-      this.$emit('input', val)
+      this.$emit('update:modelValue', val)
     }
   },
   mounted() {

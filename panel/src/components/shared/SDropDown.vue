@@ -1,8 +1,8 @@
-﻿<template>
+<template>
   <q-select outlined
             clearable
-            :value="value"
-            @input="$emit('input', $event)"
+            :model-value="value"
+            @update:model-value="$emit('input', $event)"
             v-bind="$attrs"
             v-on="$listeners"
             :options="options"

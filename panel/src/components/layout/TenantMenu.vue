@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="row">
   <q-btn flat dense class="row items-center" :loading="isLoading" to="/service/Tenant/TenantTransaction">
     <small class="text-black text-bold q-pr-sm">

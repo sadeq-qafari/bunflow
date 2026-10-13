@@ -1,7 +1,7 @@
-﻿<template>
+<template>
   <q-file dense
-          :value="file"
-          @input="updateFile"
+          :model-value="file"
+          @update:model-value="updateFile"
           outlined
           clearable
           @clear="clearInput" accept="image/*"
@@ -24,8 +24,8 @@
       <q-btn icon="hdr_auto" round padding="0" flat v-if="imageSrc" class="alt-btn">
         <q-popup-proxy>
           <q-card flat>
-            <q-input :value="value && value.alt" @input="onInputAlt" class="q-pa-xs" label="متن جایگزین" dense outlined/>
-            <q-input :value="value && value.description" @input="onInputDescription" class="q-pa-xs" label="توضیحات" dense
+            <q-input :model-value="value && value.alt" @update:model-value="onInputAlt" class="q-pa-xs" label="متن جایگزین" dense outlined/>
+            <q-input :model-value="value && value.description" @update:model-value="onInputDescription" class="q-pa-xs" label="توضیحات" dense
                      outlined/>
           </q-card>
         </q-popup-proxy>

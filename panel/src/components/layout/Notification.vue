@@ -1,4 +1,4 @@
-﻿﻿<template>
+﻿<template>
   <q-btn dense flat round icon="o_notifications" class="q-pa-xs">
 <!--    <q-badge color="red" v-if="notificationCount>0" floating>{{notificationCount}}</q-badge>-->
     <q-menu  anchor="bottom middle" self="top middle">

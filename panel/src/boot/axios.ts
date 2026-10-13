@@ -2,14 +2,8 @@ import axios, {AxiosError, AxiosInstance, AxiosPromise} from 'axios'
 import {boot} from 'quasar/wrappers'
 import {Notify} from 'quasar'
 import {i18n} from "boot/i18n";
-import {version} from "app/package.json";
+import appPackage from "app/package.json";
 import * as moment from "jalali-moment";
-
-declare module 'vue/types/vue' {
-  interface Vue {
-    $axios: AxiosInstance;
-  }
-}
 
 //#region Token Handling
 
@@ -27,11 +21,12 @@ Notify.setDefaults({
   actions: [{icon: 'close', color: 'white'}]
 })
 
-export {axios, AxiosInstance}
+export {axios}
+export type { AxiosInstance }
 
-export default boot(({Vue, app, store, router}) => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-  Vue.prototype.$axios = axios
+export default boot(({ app, store }) => {
+  const globals = app.config.globalProperties
+  globals.$axios = axios
 
   axios.interceptors.response.use((res: any) => {
     if (!res.config.noNotify && !res.config.noNotifySuccess && res.config.method != 'get') {
@@ -53,12 +48,12 @@ export default boot(({Vue, app, store, router}) => {
       }
     } else {
       if (process.env.PROD && !process.env.FLOW_STANDALONE && err.response.config.url != `${process.env.API_URL}/Notify/message/send`) {
-        let img = await Vue.prototype.$screenshot()
+        let img = await globals.$screenshot()
         let data = new FormData()
 
-        let text = `<b>Browser: </b>${Vue.prototype.$q.platform.is.name} ${Vue.prototype.$q.platform.is.version}\n`
-        text += `<b>OS: </b>${Vue.prototype.$q.platform.is.platform}\n`
-        text += `<b>AppVersion: </b>${version}\n`
+        let text = `<b>Browser: </b>${globals.$q.platform.is.name} ${globals.$q.platform.is.version}\n`
+        text += `<b>OS: </b>${globals.$q.platform.is.platform}\n`
+        text += `<b>AppVersion: </b>${appPackage.version}\n`
         store.state.user ? text += `<b>User: </b>${store.state.user.given_name} ${store.state.user.family_name}\nUserId: ${store.state.user.sub}\nUserName: ${store.state.user.username}\n` : undefined;
         store.state.tenant ? text += `<b>Tenant: </b>${store.state.tenant.title}\n` : undefined
         text += `<b>Current Url: </b>${location.href}\n`
@@ -88,7 +83,7 @@ export default boot(({Vue, app, store, router}) => {
       let actions = []
       let progress = false
       let timeout = 5000
-      let caption = err?.response?.data?.error?.details && i18n.t(`errors.${err?.response?.data?.error?.details}`) || err.message
+      let caption = err?.response?.data?.error?.details && i18n.global.t(`errors.${err?.response?.data?.error?.details}`) || err.message
 
       if (err.response.status === 401) {
         if (store.state.tenant?.name?.toLowerCase() == 'hamianedemo') {

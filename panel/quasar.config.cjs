@@ -27,6 +27,12 @@ const prodEnv = {
 
 module.exports = configure(function (ctx) {
   return {
+    sourceFiles: {
+      // Keep the existing Vuex store; Quasar's Vue 3 CLI otherwise only looks
+      // for its default Pinia directory and would omit the store entirely.
+      store: 'src/store/index.ts'
+    },
+
     // https://quasar.dev/quasar-cli/supporting-ts
     supportTS: {
       tsCheckerConfig: {
@@ -95,14 +101,6 @@ module.exports = configure(function (ctx) {
 
       // https://quasar.dev/quasar-cli/handling-webpack
       extendWebpack(cfg) {
-        // linting is slow in TS projects, we execute it only for production builds
-        if (ctx.prod) {
-          cfg.module.rules.push({
-            enforce: 'pre',
-            test: /\.(js|vue)$/,
-            exclude: /node_modules/
-          })
-        }
         //#region CKEditor
         cfg.plugins.push(new CKEditorWebpackPlugin({
           // See https://ckeditor.com/docs/ckeditor5/latest/features/ui-language.html
@@ -134,6 +132,21 @@ module.exports = configure(function (ctx) {
       //#region CKEditor
 
       chainWebpack: config => {
+        config.resolve.alias.set(
+          '@quasar/extras',
+          path.join(path.dirname(require.resolve('@quasar/extras/package.json')), 'exports')
+        )
+
+        // Use Vue's migration build while the legacy screens transition to Vue 3.
+        config.resolve.alias.set('vue$', '@vue/compat')
+        config.module.rule('vue').use('vue-loader').tap(options => ({
+          ...options,
+          compilerOptions: {
+            ...options.compilerOptions,
+            compatConfig: { MODE: 3 }
+          }
+        }))
+
         // (2.) Transpile the .css files imported by the editor using PostCSS.
         // Make sure only the CSS belonging to ckeditor5-* packages is processed this way.
         config.module
@@ -164,7 +177,7 @@ module.exports = configure(function (ctx) {
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework
     framework: {
       iconSet: 'material-icons', // Quasar icon set
-      lang: 'fa-ir', // Quasar language pack
+      lang: 'fa-IR', // Quasar language pack
       config: {
         //dark: 'auto'
       },

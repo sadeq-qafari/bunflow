@@ -1,4 +1,4 @@
-﻿<template>
+<template>
     <q-bar class="bg-white text-grey-8">
       <q-btn dense flat color="grey-8" icon="home" size="md" to="/flow"/>
       <q-item dense clickable v-ripple v-for="menu of menus" :key="menu.id">

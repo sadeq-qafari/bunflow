@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <q-card :class="['col',fullscreen?'fullscreen':undefined ]" flat bordered>
     <q-card-section class="q-pa-none">
       <q-toolbar>

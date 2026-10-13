@@ -1,5 +1,5 @@
-﻿<template>
-  <q-table v-if="formData" class="border-radius" v-bind="$attrs" :data="data" :columns="cols" flat dense>
+<template>
+  <q-table v-if="formData" class="border-radius" v-bind="$attrs" :rows="data" :columns="cols" flat dense>
 
     <!-- no data -->
     <template v-slot:no-data>
@@ -21,7 +21,7 @@
       <div v-if="!hideHeader"
            class="no-margin full-width rounded-borders row justify-between items-center q-py-xs text-weight-bold bg-blue-grey-2">
         <div class="q-px-sm" v-if="showCheckbox">
-          <q-checkbox dense :value="totalCheck" @input="totalCheckToggle($event)"/>
+          <q-checkbox dense :model-value="totalCheck" @update:model-value="totalCheckToggle($event)"/>
         </div>
         <div class="q-px-sm">
           {{ formData.title }}
@@ -38,12 +38,12 @@
       <q-td class="text-center">
         <span class="grid-cell">
           <span v-if="showCheckbox && col.name=='checkbox_field'" class="flex">
-            <q-checkbox dense :value="!!props.value" @input="checkToggle(props,$event)"/>
+            <q-checkbox dense :model-value="!!props.value" @update:model-value="checkToggle(props,$event)"/>
           </span>
-          <span v-else-if="col.property.type=='decimal'">
+          <span v-else-if="col.property && col.property.type=='decimal'">
             {{ props.value && props.value.replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}
           </span>
-          <span v-else-if="col.property.type=='boolean'">
+          <span v-else-if="col.property && col.property.type=='boolean'">
             {{ props.value == 'True' ? '✔️' : '❌' }}
           </span>
           <span v-else>
@@ -58,7 +58,7 @@
 
 <script lang="ts">
 import {IForm, IFormAction, IFormProperty} from "./models";
-import {defineComponent} from "@vue/composition-api";
+import {defineComponent} from "vue";
 
 export default defineComponent({
   name: "FSimpleDataGrid",

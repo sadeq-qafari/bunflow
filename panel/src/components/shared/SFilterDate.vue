@@ -1,7 +1,7 @@
-﻿<template>
+<template>
   <div>
     <q-input mask="####/##/##" :label="hideLabel?undefined:label" :outlined="outlined" :placeholder="placeholder" :dense="dense" :rules="rules"
-             :value="date1" @input="update(0, $event)" input-style="padding:0">
+             :model-value="date1" @update:model-value="update(0, $event)" input-style="padding:0">
       <template v-slot:prepend>
         <div class="flex row full-height items-stretch">
           <div>
@@ -21,8 +21,8 @@
           <div>
             <q-icon name="event" class="cursor-pointer">
               <q-popup-proxy transition-show="scale" transition-hide="scale">
-                <q-date :calendar="locale.toLowerCase() === 'fa-ir' ? 'persian' : 'english'" :value="date1"
-                        @input="update(0, $event)" mask="####/##/##">
+                <q-date :calendar="locale.toLowerCase() === 'fa-ir' ? 'persian' : 'english'" :model-value="date1"
+                        @update:model-value="update(0, $event)" mask="####/##/##">
                   <div class="row items-center justify-end">
                     <q-btn v-close-popup label="بستن" color="primary" flat/>
                   </div>
@@ -36,12 +36,12 @@
     </q-input>
     <q-input v-if="value.type.includes('between')" mask="####/##/##" :label="label" :outlined="outlined"
              :placeholder="placeholder" :dense="dense" :rules="rules"
-             :value="date2" @input="update(1, $event)">
+             :model-value="date2" @update:model-value="update(1, $event)">
       <template v-slot:prepend>
         <q-icon name="event" class="cursor-pointer">
           <q-popup-proxy transition-show="scale" transition-hide="scale">
-            <q-date :calendar="locale.toLowerCase() === 'fa-ir' ? 'persian' : 'english'" :value="date2"
-                    @input="update(1, $event)" mask="####/##/##">
+            <q-date :calendar="locale.toLowerCase() === 'fa-ir' ? 'persian' : 'english'" :model-value="date2"
+                    @update:model-value="update(1, $event)" mask="####/##/##">
               <div class="row items-center justify-end">
                 <q-btn v-close-popup label="بستن" color="primary" flat/>
               </div>

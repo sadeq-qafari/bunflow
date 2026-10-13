@@ -1,8 +1,8 @@
-﻿<template>
+<template>
     <q-select
 
-      :value="selectedOptions"
-      @input="onInput"
+      :model-value="selectedOptions"
+      @update:model-value="onInput"
       clearable
       use-input
       use-chips
@@ -47,7 +47,7 @@ export default {
 
 
   props: {
-    value: String | null,
+    modelValue: String | null,
     lookup: {
       type: Object | null,
       default: null
@@ -86,7 +86,7 @@ export default {
       this.selectedOptions = event
       let val = event?.map(x => x.value).join(',') || ''
       console.log('input', val)
-      this.$emit('input', val)
+      this.$emit('update:modelValue', val)
     },
 
 
@@ -119,7 +119,7 @@ export default {
 
 
     async getFormDropdownValue() {
-      const res = await this.$axios.get(`${process.env.API_URL}/flow/form/multiDropdown/${this.formName}?Ids=${this.value || 0}`)
+      const res = await this.$axios.get(`${process.env.API_URL}/flow/form/multiDropdown/${this.formName}?Ids=${this.modelValue || 0}`)
       if (res.data.success && res.data.result) {
         let items = res.data.result || []
         let valueKey = Object.keys(items[0])[0] //|| 'Id'
@@ -132,8 +132,8 @@ export default {
 
 
     getLookupDropdownValue() {
-      console.log('getLookupDropdownValue',this.value)
-      let items = this.lookup.options.filter(x => this.value.includes(x.value))
+      console.log('getLookupDropdownValue',this.modelValue)
+      let items = this.lookup.options.filter(x => this.modelValue.includes(x.value))
       this.selectedOptions = items.map(item => ({value: item.value, label: item.title, ...item}))
     },
 
@@ -191,7 +191,7 @@ export default {
 
 
   async mounted() {
-    if (this.value)
+    if (this.modelValue)
       await this.getValue()
   },
 

@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <q-card class="row q-pb-sm" flat>
     <q-card-section class="col-12 row justify-between items-center q-py-sm">
       <div class="text-bold">{{ label }}</div>
@@ -10,14 +10,14 @@
     <q-separator inset=""/>
     <q-card-section :class="['row q-pb-none',twoColumn?'col-6':'col-12']" v-for="(item,i) of list" :key="`contact-${i}`">
       <div class="col-4">
-        <q-input class="col" dense outlined label="عنوان" :value="item.title" @input="onInput('title',$event,i)"
+        <q-input class="col" dense outlined label="عنوان" :model-value="item.title" @update:model-value="onInput('title',$event,i)"
                  :rules="[val => !!val || (!!val && !!item.value) || (!val && !item.value) || 'اطلاعات تماس را وارد کنید']"
                  ref="titleInput"/>
       </div>
       <div class="col">
-        <q-input class="col q-px-xs" dir="ltr" dense outlined label="شماره تماس/ایمیل/آدرس/..." :value="item.value"
+        <q-input class="col q-px-xs" dir="ltr" dense outlined label="شماره تماس/ایمیل/آدرس/..." :model-value="item.value"
                  ref="valueInput"
-                 @input="onInput('value',$event,i)"
+                 @update:model-value="onInput('value',$event,i)"
                  :rules="[val => !!val || (!!val && !!item.title) || (!val && !item.title) || 'اطلاعات تماس را وارد کنید']"/>
       </div>
       <div class="col-auto row q-pb-md q-mb-xs">

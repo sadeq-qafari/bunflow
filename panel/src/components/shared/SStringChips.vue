@@ -1,8 +1,8 @@
-﻿<template>
+<template>
   <q-select
-    :value="valueObject"
+    :model-value="valueObject"
     v-bind="$attrs"
-    @input="onInput"
+    @update:model-value="onInput"
     use-input
     use-chips
     multiple

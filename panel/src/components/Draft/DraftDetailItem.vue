@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <transition appear enter-active-class="animated fadeInDown">
     <div class="column full-width border-radius bg-grey-2 overflow-hidden">
 

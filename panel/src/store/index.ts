@@ -1,30 +1,26 @@
-import {store} from 'quasar/wrappers'
-import Vuex from 'vuex'
+import { store } from 'quasar/wrappers'
+import { createStore } from 'vuex'
 
 import state from './state'
 import actions from './actions'
 import getters from './getters'
 import mutations from './mutations'
 
-// export {StateInterface} from './state'
-
-/*
- * If not building with SSR mode, you can
- * directly export the Store instantiation
- */
-
-export default store(function ({Vue}) {
-  Vue.use(Vuex)
-
-  return new Vuex.Store({
+export default store(() => {
+  const instance = createStore({
     actions,
     getters,
     mutations,
     state,
-
-    // enable strict mode (adds overhead!)
-    // for dev mode only
     strict: !!process.env.DEV
   })
-})
 
+  // Quasar's current CLI assumes a Pinia store provider and calls store.use()
+  // to expose the router. Keep Vuex 4 and adapt that one provider hook.
+  ;(instance as any).use = (plugin: (context: { store: typeof instance }) => void) => {
+    plugin({ store: instance })
+    return instance
+  }
+
+  return instance
+})

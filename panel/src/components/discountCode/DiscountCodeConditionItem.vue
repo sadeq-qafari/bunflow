@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="row full-width bg-grey-2 border-radius q-pa-md q-gutter-x-md items-center">
 
     <!-- target -->
@@ -38,7 +38,7 @@
 import SAutoComplete from "../shared/SAutoComplete";
 import SChips from "../shared/SChips";
 import SInput from "../shared/SInput";
-import {ref} from "@vue/composition-api";
+import {ref} from "vue";
 
 export default {
   name: "DiscountCodeConditionItem",

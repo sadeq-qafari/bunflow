@@ -1,8 +1,8 @@
-﻿<template>
+<template>
   <div class="row q-col-gutter-sm no-padding">
     <q-file
-      :value="file"
-      @input="updateFiles"
+      :model-value="file"
+      @update:model-value="updateFiles"
       :label="label"
       outlined
       class="col-xs-12 col-sm-6 col-md-4 s-image-input"

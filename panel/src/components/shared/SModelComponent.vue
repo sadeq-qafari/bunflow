@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <q-card v-bind="$attrs" v-if="service && model">
     <q-card-section class="row q-mt-none q-col-gutter-sm items-start q-pa-none">
       <s-input v-for="(item,index) in components" :property="item.property" :model="item.model" @input="onInput"
@@ -15,7 +15,7 @@
 
 <script>
 import SInput from 'components/shared/SInput'
-import {ref} from "@vue/composition-api";
+import {ref} from "vue";
 
 export default {
   name: 'SModelComponent',
@@ -143,7 +143,7 @@ export default {
     this.buildComponents()
     this.executeController()
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.initialData = {}
   }
 }

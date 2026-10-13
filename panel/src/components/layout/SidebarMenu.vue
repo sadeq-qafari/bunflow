@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="full-height">
     <!--    <div class="block q-pt-xs" style="height: 6vh;">-->
     <!--      <div class="menu-item">-->
@@ -70,7 +70,7 @@
 </template>
 
 <script>
-import {defineComponent, ref} from '@vue/composition-api'
+import {defineComponent, ref} from 'vue'
 import SInput from "../shared/SInput";
 
 export default defineComponent({

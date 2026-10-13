@@ -1,9 +1,0 @@
-node_modules/
-panel/dist/
-panel/.quasar/
-standalone/dist/
-standalone/src/*.generated.ts
-*.sqlite*
-.env
-.env.*
-!.env.example

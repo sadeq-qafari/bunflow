@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <q-page class="q-pa-md column">
     <f-data-grid :form-name="formName" v-if="show && formsLoaded"/>
     <q-skeleton v-else height="300px" width="100%" class="bg-blue-grey-1 full-width border-radius"></q-skeleton>

@@ -1,11 +1,11 @@
-﻿<template>
+<template>
   <q-select outlined
             use-input
             input-debounce="500"
-            :value="valueObject"
+            :model-value="valueObject"
             v-bind="$attrs"
             :label="hideLabel?undefined:$attrs.label"
-            @input="onInput"
+            @update:model-value="onInput"
             :dense="dense"
             :options="localOptions"
             multiple

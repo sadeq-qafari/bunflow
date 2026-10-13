@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="editor-input">
     <div class="q-pa-sm text-center">{{label}}</div>
     <q-separator color="grey-7" inset=""/>
@@ -16,7 +16,7 @@ export default {
     id:Math.random().toString()
   }),
   props: {
-    value: String | null,
+    modelValue: String | null,
     label: String
   },
   methods: {
@@ -24,12 +24,12 @@ export default {
       return value
     },
     onInput($event) {
-      this.$emit('input', $event)
+      this.$emit('update:modelValue', $event)
     },
   },
   async mounted() {
     console.log(Prism)
-    document.getElementById(this.id).textContent = this.value
+    document.getElementById(this.id).textContent = this.modelValue
 
     let options = {
       tab: ' '.repeat(4)
@@ -43,7 +43,7 @@ export default {
     let jar = CodeJar(document.getElementById(this.id), highlightFn, options)
 
     jar.onUpdate(code => {
-      this.$emit('input', code)
+      this.$emit('update:modelValue', code)
     })
 
   }

@@ -12,7 +12,11 @@ const panel = resolve(root, "../panel");
 const args = process.argv.slice(2);
 if (!args.includes("--skip-panel")) {
   const processHandle = Bun.spawn(
-    ["node", join(panel, "node_modules/@quasar/app/bin/quasar"), "build"],
+    [
+      "node",
+      join(panel, "node_modules/@quasar/app-webpack/bin/quasar"),
+      "build",
+    ],
     {
       cwd: panel,
       env: {

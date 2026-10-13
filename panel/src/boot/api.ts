@@ -1,11 +1,5 @@
-﻿import {axios, AxiosInstance, SetBearerToken} from './axios'
+import {axios, AxiosInstance, SetBearerToken} from './axios'
 import {boot} from "quasar/wrappers";
-
-declare module 'vue/types/vue' {
-  interface Vue {
-    $api: Api;
-  }
-}
 
 //#region Global Interfaces
 interface IResponse<T> {
@@ -501,19 +495,19 @@ class Menu {
 
 
 export class Api {
-  service = new ServiceList(process.env.API_URL + '/core' ?? '');
-  form = new FormList(process.env.API_URL + '/flow' ?? '');
-  menu = new Menu(process.env.API_URL + '/core' ?? '');
+  service = new ServiceList((process.env.API_URL || '') + '/core');
+  form = new FormList((process.env.API_URL || '') + '/flow');
+  menu = new Menu((process.env.API_URL || '') + '/core');
   serviceProvider = new ServiceProvider();
   formProvider = new FormProvider();
   // base = new BaseApi(process.env.BASE_URL ?? '');
   // hotel = new HotelApi(process.env.HOTEL_URL ?? '');
-  identity = new IdentityApi(process.env.API_URL + '/identity' ?? '');
+  identity = new IdentityApi((process.env.API_URL || '') + '/identity');
 }
 
 export const api = new Api()
-export default boot(({Vue, app}) => {
-  Vue.prototype.$api = api
+export default boot(({ app }) => {
+  app.config.globalProperties.$api = api
 })
 
 

@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <q-card  class="bg-white q-ma-sm" flat bordered>
     <q-card-actions class="widget">
       <div :class="['widget-bg full-width flex items-start justify-end q-pa-sm',`text-${bgColor}`]">

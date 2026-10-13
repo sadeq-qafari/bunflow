@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="flex row items-center justify-between bg-grey-4 rounded-borders">
     <div class="col-10">
       <Map :latitude="previewLatitude" :zoom-control="false"
@@ -16,8 +16,8 @@
           <q-select class="flex col-md-5"
                     dense
                     outlined
-                    @input="setLocationFromSearch"
-                    :value="locationLabel"
+                    @update:model-value="setLocationFromSearch"
+                    :model-value="locationLabel"
                     use-input
 
                     hide-selected

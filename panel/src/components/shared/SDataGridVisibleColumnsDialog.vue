@@ -1,9 +1,9 @@
-﻿<template>
+<template>
   <s-dialog size="sm" ref="dialog" title="ستون‌های نمایشی">
     <div class="col">
       <q-option-group
-        :value="value"
-        @input="$emit('input', $event)"
+        :model-value="modelValue"
+        @update:model-value="$emit('update:modelValue', $event)"
         :options="options"
         type="toggle"
       />
@@ -18,7 +18,7 @@ export default {
   name: 'SDataGridVisibleColumnsDialog',
   components: {SDialog},
   props: {
-    value: Array,
+    modelValue: Array,
   },
   computed: {},
   data: () => ({}),

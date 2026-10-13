@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="col row border-radius q-pl-xs" style="border:1px solid #e1e1e1">
     <span class="q-px-xs text-grey-6 cursor-pointer" v-if="!(filterChips.length>0)"
           @click="showDialog = true">جستجوی پیشرفته</span>

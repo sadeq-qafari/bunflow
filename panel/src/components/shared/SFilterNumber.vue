@@ -1,7 +1,7 @@
-﻿<template>
+<template>
   <div class="row full-width justify-between align-items-center">
     <q-input :label="hideLabel?undefined:label" :outlined="outlined" :placeholder="placeholder" :dense="dense"
-             :debounce="500" :value="value.value[0]" @input="update(0, $event)"
+             :debounce="500" :model-value="value.value[0]" @update:model-value="update(0, $event)"
              :class="value.type.includes('between') ? 'col-6' : 'col-12'">
       <template v-slot:prepend>
         <q-tooltip>{{ filterLabel }}</q-tooltip>
@@ -20,7 +20,7 @@
     </q-input>
     <div v-if="value.type.includes('between')" class="col-1 text-center text-black">تا</div>
     <q-input v-if="value.type.includes('between')" :label="label" :outlined="outlined" :placeholder="placeholder" :dense="dense"
-             :value="value.value[1]" @input="update(1, $event)"
+             :model-value="value.value[1]" @update:model-value="update(1, $event)"
              :class="value.type.includes('between') ? 'col-5' : 'col-12'"/>
   </div>
 </template>

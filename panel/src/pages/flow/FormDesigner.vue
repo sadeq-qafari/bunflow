@@ -1,8 +1,8 @@
-﻿<template>
+<template>
   <q-layout view="hHh LpR fFf">
 
     <!-- element list -->
-    <q-drawer v-model="right" side="left" bordered>
+    <q-drawer v-model="right" side="left" bordered behavior="desktop" :breakpoint="0">
       <q-scroll-area class="full-width full-height q-px-md q-py-lg" :thumb-style="thumbStyle">
         <div :class="['column full-width q-pt-xl q-pb-md q-gutter-y-md', elements.length > 9 ? 'q-pr-sm' : undefined]">
           <div v-for="element of elements"
@@ -68,7 +68,7 @@
 
           <!-- layout -->
           <grid-layout
-            :layout.sync="layout"
+            v-model:layout="layout"
             :row-height="48"
             :is-draggable="true"
             :is-resizable="false"
@@ -90,7 +90,7 @@
               <!-- component -->
               <component
                 :is="getElementComponent(element)"
-                :value="element.formProperty && element.formProperty.defaultValue"
+                :model-value="element.formProperty && element.formProperty.defaultValue"
                 :label="element.formProperty && element.formProperty.title"
                 :hint="element.formProperty && element.formProperty.hint"
                 :placeholder="element.formProperty && element.formProperty.placeholder"
@@ -184,7 +184,7 @@
     </q-page-container>
 
     <!-- properties -->
-    <q-drawer v-model="left" side="right" bordered>
+    <q-drawer v-model="left" side="right" bordered behavior="desktop" :breakpoint="0">
       <div class="column full-width full-height q-pt-xl q-pb-lg bg-grey-1">
 
         <!-- header -->
@@ -315,7 +315,7 @@
 
               <!-- element properties -->
               <div
-                v-else-if="selectedActionItem == null && selectItem != null && selectedElement && selectedElement.formProperty"
+                v-else-if="selectedActionItem == null && selectedItem != null && selectedElement && selectedElement.formProperty"
                 class="column full-width q-pr-sm q-gutter-y-md">
 
                 <!-- label -->
@@ -329,7 +329,7 @@
 
                   <!-- input -->
                   <q-input v-model="selectedElement.formProperty.title" class="full-width" bg-color="white" outlined
-                           @input="refreshSelectedElement" dense/>
+                           @update:model-value="refreshSelectedElement" dense/>
 
                 </div>
 
@@ -344,7 +344,7 @@
 
                   <!-- input -->
                   <q-input v-model="selectedElement.formProperty.name" mask="ASSSSSSSSSSSSSSSSSSSSSSSSSSSSS" dir="ltr"
-                           class="full-width" bg-color="white" outlined @input="refreshSelectedElement" dense/>
+                           class="full-width" bg-color="white" outlined @update:model-value="refreshSelectedElement" dense/>
 
                 </div>
 
@@ -357,9 +357,9 @@
                   </div>
 
                   <!-- input -->
-                  <q-input :value="selectedElement.w" class="full-width" bg-color="white"
+                  <q-input :model-value="selectedElement.w" class="full-width" bg-color="white"
                            hint="ابعاد باید بین 1 تا 12 باشد" type="number" outlined dense
-                           @input="rearrangeLayout();refreshSelectedElement()"/>
+                           @update:model-value="rearrangeLayout();refreshSelectedElement()"/>
 
                 </div>
 
@@ -373,7 +373,7 @@
 
                   <!-- input -->
                   <q-select v-model="selectedElement.formProperty.type" class="full-width" :options="elementTypes"
-                            bg-color="white" outlined dense @input="refreshLayout();refreshSelectedElement()"/>
+                            bg-color="white" outlined dense @update:model-value="refreshLayout();refreshSelectedElement()"/>
 
                 </div>
 
@@ -387,7 +387,7 @@
 
                   <!-- input -->
                   <q-input v-model="selectedElement.formProperty.hint" class="full-width" bg-color="white" outlined
-                           @input="refreshSelectedElement" dense/>
+                           @update:model-value="refreshSelectedElement" dense/>
 
                 </div>
 
@@ -401,7 +401,7 @@
 
                   <!-- input -->
                   <q-input v-model="selectedElement.formProperty.defaultValue" class="full-width" bg-color="white"
-                           @input="refreshSelectedElement" outlined dense/>
+                           @update:model-value="refreshSelectedElement" outlined dense/>
 
                 </div>
 
@@ -415,7 +415,7 @@
 
                   <!-- input -->
                   <q-input v-model="selectedElement.formProperty.placeholder" class="full-width" bg-color="white"
-                           outlined dense @input="refreshLayout();refreshSelectedElement()"/>
+                           outlined dense @update:model-value="refreshLayout();refreshSelectedElement()"/>
 
                 </div>
 
@@ -428,7 +428,7 @@
                   </div>
 
                   <!-- auto complete -->
-                  <s-auto-complete v-model="selectedElement.formProperty.relatedFormId" bg-color="white"
+                  <s-auto-complete v-model:model-value="selectedElement.formProperty.relatedFormId" bg-color="white"
                                    @input="refreshSelectedElement" :url="`${baseUrl}/flow/form`" dense/>
 
                 </div>
@@ -442,7 +442,7 @@
                   </div>
 
                   <!-- auto complete -->
-                  <s-auto-complete v-model="selectedElement.formProperty.relatedFormPropertyId" bg-color="white"
+                  <s-auto-complete v-model:model-value="selectedElement.formProperty.relatedFormPropertyId" bg-color="white"
                                    :url="`${baseUrl}/flow/formProperty`" @input="refreshSelectedElement"
                                    :filters="[{name: 'formId', value: selectedElement.relatedFormId}]" dense/>
 
@@ -457,7 +457,7 @@
                   </div>
 
                   <!-- auto complete -->
-                  <s-auto-complete v-model="selectedElement.formProperty.lookupId" bg-color="white"
+                  <s-auto-complete v-model:model-value="selectedElement.formProperty.lookupId" bg-color="white"
                                    :url="`${baseUrl}/flow/lookup`" @input="refreshSelectedElement"
                                    dense/>
 
@@ -465,54 +465,54 @@
 
                 <!-- is required -->
                 <q-toggle v-model="selectedElement.formProperty.isRequired" color="primary" size="sm" label="ضروری"
-                          @input="refreshSelectedElement" dense/>
+                          @update:model-value="refreshSelectedElement" dense/>
 
                 <!-- is addable -->
                 <q-checkbox v-model="selectedElement.formProperty.isAddable" color="primary" size="sm" label="قابل درج"
-                            @input="refreshSelectedElement" dense/>
+                            @update:model-value="refreshSelectedElement" dense/>
 
                 <!-- is updatable -->
                 <q-checkbox v-model="selectedElement.formProperty.isUpdatable" color="primary" size="sm"
-                            label="قابل ویرایش" @input="refreshSelectedElement" dense/>
+                            label="قابل ویرایش" @update:model-value="refreshSelectedElement" dense/>
 
                 <!-- is filterable -->
                 <q-checkbox v-model="selectedElement.formProperty.isFilterable" color="primary" size="sm"
                             label="قابل فیلتر / جستجو"
-                            @input="refreshSelectedElement" dense/>
+                            @update:model-value="refreshSelectedElement" dense/>
 
                 <!-- is hidden in grid -->
                 <q-checkbox v-model="selectedElement.formProperty.isHiddenInGrid" color="primary" size="sm"
                             label="عدم نمایش در لیست"
-                            @input="refreshSelectedElement" dense/>
+                            @update:model-value="refreshSelectedElement" dense/>
 
                 <!-- is visible in dropdown -->
                 <q-checkbox v-model="selectedElement.formProperty.isVisibleInDropdown" color="primary" size="sm"
-                            label="نمایش در کمبو باکس" @input="refreshSelectedElement" dense/>
+                            label="نمایش در کمبو باکس" @update:model-value="refreshSelectedElement" dense/>
 
                 <!-- is hidden in form -->
                 <q-checkbox v-model="selectedElement.formProperty.isHiddenInForm" color="primary" size="sm"
                             label="عدم نمایش در فرم"
-                            @input="refreshSelectedElement" dense/>
+                            @update:model-value="refreshSelectedElement" dense/>
 
                 <!-- is unique -->
                 <q-checkbox v-model="selectedElement.formProperty.isUnique" color="primary" size="sm"
-                            label="منحصر به فرد" @input="refreshSelectedElement" dense/>
+                            label="منحصر به فرد" @update:model-value="refreshSelectedElement" dense/>
 
                 <!-- is SensitiveToRepetition -->
                 <q-checkbox v-model="selectedElement.formProperty.isSensitiveToRepetition" color="primary" size="sm"
-                            label="حساس به تکرار" @input="refreshSelectedElement" dense/>
+                            label="حساس به تکرار" @update:model-value="refreshSelectedElement" dense/>
 
                 <!-- is computed -->
                 <q-checkbox v-model="selectedElement.formProperty.isComputed" color="primary" size="sm" label="محاسباتی"
-                            @input="refreshSelectedElement" dense/>
+                            @update:model-value="refreshSelectedElement" dense/>
 
                 <!-- is active -->
                 <q-checkbox v-model="selectedElement.formProperty.isActive" color="primary" size="sm" label="فعال"
-                            @input="refreshSelectedElement" dense/>
+                            @update:model-value="refreshSelectedElement" dense/>
 
                 <!-- css style -->
                 <div class="full-width border-radius overflow-hidden">
-                  <s-code-editor v-model="selectedElement.formProperty.cssStyle" label="استایل css"/>
+                  <s-code-editor v-model:model-value="selectedElement.formProperty.cssStyle" label="استایل css"/>
                 </div>
 
                 <!-- rules -->
@@ -537,7 +537,7 @@
                   </div>
 
                   <!-- input -->
-                  <q-input v-model="selectedAction.title" class="full-width" bg-color="white" outlined
+                  <q-input v-model:model-value="selectedAction.title" class="full-width" bg-color="white" outlined
                            dense/>
 
                 </div>
@@ -564,18 +564,18 @@
                   </div>
 
                   <!-- input -->
-                  <q-select v-model="selectedAction.typeLookup" class="full-width" :options="actionTypes"
+                  <q-select v-model:model-value="selectedAction.typeLookup" class="full-width" :options="actionTypes"
                             bg-color="white" map-options emit-value outlined dense/>
 
                 </div>
 
                 <!-- script -->
                 <div class="full-width border-radius overflow-hidden">
-                  <s-code-editor v-model="selectedAction.script" label="اسکریپت"/>
+                  <s-code-editor v-model:model-value="selectedAction.script" label="اسکریپت"/>
                 </div>
 
                 <!-- is active -->
-                <q-checkbox v-model="selectedAction.isActive" color="primary" size="sm" label="فعال" dense/>
+                <q-checkbox v-model:model-value="selectedAction.isActive" color="primary" size="sm" label="فعال" dense/>
 
               </div>
 
@@ -608,7 +608,7 @@
 </template>
 
 <script>
-import VueGridLayout from 'vue-grid-layout'
+import * as VueGridLayout from 'grid-layout-plus'
 import FInput from "../../components/flow/FInput";
 import FDropdown from "../../components/flow/FDropdown";
 import FColorPicker from "../../components/flow/FColorPicker";
@@ -684,7 +684,8 @@ export default {
       return +this.$route.query.id
     },
     elementTypes() {
-      return this.elements.find(element => element.id === this.selectedElement.formProperty.elementId).acceptableTypes.split(',')
+      const element = this.elements.find(element => element.id === this.selectedElement?.formProperty?.elementId)
+      return element ? element.acceptableTypes.split(',') : []
     },
     availablePresetActions() {
       return this.presetActions.filter(action => this.actions.findIndex(item => item.name === action.name) < 0)
@@ -919,6 +920,7 @@ export default {
     }
   },
   async mounted() {
+    if (this.id > 0 && !this.$store.state.forms?.length) await this.$store.dispatch('loadForms')
     if (this.id > 0) await this.loadFormInfo()
     await this.loadElements()
   }

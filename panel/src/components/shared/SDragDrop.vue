@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="row justify-between q-pa-sm no-select">
 
     <!----SOURCE---->

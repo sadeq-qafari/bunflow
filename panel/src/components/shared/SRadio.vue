@@ -1,10 +1,10 @@
-﻿<template>
+<template>
     <q-option-group class="q-py-sm"
-      :value="value"
+      :model-value="value"
       :options="options"
       inline
       v-bind="$attrs"
-      @input="onInput"
+      @update:model-value="onInput"
     />
 </template>
 

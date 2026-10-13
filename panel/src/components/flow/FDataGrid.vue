@@ -1,7 +1,7 @@
-﻿<template>
-  <q-table v-if="formData" class="border-radius" v-bind="$attrs" :data="data" :columns="cols" flat dense
+<template>
+  <q-table v-if="formData" class="border-radius" v-bind="$attrs" :rows="data" :columns="cols" flat dense
            :loading="isLoading"
-           :pagination.sync="pagination" @request="getData">
+           v-model:pagination="pagination" @request="getData">
 
     <!-- no data -->
     <template v-slot:no-data>
@@ -38,11 +38,11 @@
         <q-space/>
 
         <div class="col-6">
-          <q-input borderless v-model="pagination.filter"
+          <q-input borderless v-model:model-value="pagination.filter"
                    :class="['search-input bg-grey-1 q-pr-sm',!!pagination.filter && data.length>0?'positive-border':undefined]"
                    input-class="q-px-md"
                    placeholder="جستجو" clearable
-                   dense debounce="300" @input="getData">
+                   dense debounce="300" @update:model-value="getData">
             <template v-slot:append>
               <q-icon name="search"/>
             </template>
@@ -63,7 +63,7 @@
           <q-separator inset vertical class="q-mx-sm"/>
 
           <!-- import excel-->
-          <q-file ref="file" v-model="file" @input="importData" accept=".xls,.xlsx" style="display: none"/>
+          <q-file ref="file" v-model:model-value="file" @update:model-value="importData" accept=".xls,.xlsx" style="display: none"/>
           <router-link style="text-decoration: none" tag="div" :to="`/flow/import/${formName}`">
             <q-btn class="rounded-borders" icon="backup" color="teal-2" text-color="teal-7" unelevated dense/>
           </router-link>
@@ -91,10 +91,10 @@
     <template v-for="col in cols" v-slot:[`body-cell-${col.name}`]="props">
       <q-td class="text-center grid-cell">
         <span class="grid-cell">
-          <span v-if="col.property.type=='decimal'">
+          <span v-if="col.property && col.property.type=='decimal'">
             {{ props.value && props.value.replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}
           </span>
-          <span v-else-if="col.property.type=='boolean'">
+          <span v-else-if="col.property && col.property.type=='boolean'">
             {{ props.value == 'True' ? '✔️' : '❌' }}
           </span>
           <span v-else>
@@ -158,7 +158,7 @@
 
 <script lang="ts">
 import {IForm, IFormAction, IFormProperty} from "./models";
-import {defineComponent} from "@vue/composition-api";
+import {defineComponent} from "vue";
 import axios from "axios";
 
 export default defineComponent({

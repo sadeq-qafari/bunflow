@@ -1,6 +1,6 @@
-﻿<template>
+<template>
   <div class="row full-width justify-between items-center">
-    <q-select outlined dense :value="inputValue" :options="options" :label="hideLabel?undefined:label" @input="update(0, $event)"
+    <q-select outlined dense :model-value="inputValue" :options="options" :label="hideLabel?undefined:label" @update:model-value="update(0, $event)"
               class="col-12"/>
   </div>
 

@@ -1,13 +1,13 @@
-﻿<template>
+<template>
   <q-table
     dense
     separator="vertical"
     :loading="loading"
     :title="$t(`${tableName}.table.title`)"
-    :data="data"
+    :rows="data"
     :columns="columns"
     row-key="id"
-    :pagination.sync="pagination"
+    v-model:pagination="pagination"
     :visible-columns="visibleColumns"
     @request="onRequest"
     :virtual-scroll-sticky-size-start="60"
@@ -22,7 +22,7 @@
           </div>
         </q-toolbar-title>
         <q-select
-          v-model="visibleColumns"
+          v-model:model-value="visibleColumns"
           multiple
           outlined
           dense
@@ -99,7 +99,7 @@
 
 <script>
   import SDialog from "components/shared/SDialog";
-  import {ref} from '@vue/composition-api'
+  import {ref} from 'vue'
 
   export default {
     name: "STable",

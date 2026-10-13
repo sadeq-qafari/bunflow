@@ -1,11 +1,11 @@
-﻿<template>
+<template>
   <q-card class="col q-ml-sm" flat>
     <q-card-section class="search-header">
       <q-input borderless v-model="searchValue"
                :class="['search-input bg-grey-1 q-pr-sm']"
                input-class="q-px-md"
                placeholder="جستجو" clearable
-               dense debounce="500" @input="search">
+               dense debounce="500" @update:model-value="search">
         <template v-slot:append>
           <q-icon name="search"/>
         </template>

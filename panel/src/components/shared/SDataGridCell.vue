@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div v-if="col">
 <!--    <q-menu v-if="hasMenu"-->
 <!--            touch-position-->
@@ -14,7 +14,7 @@
 <!--      </q-list>-->
 
 <!--    </q-menu>-->
-    <q-checkbox disable dense v-if="col.type === 'bool'" :value="val"/>
+    <q-checkbox disable dense v-if="col.type === 'bool'" :model-value="val"/>
     <div v-else-if="col.type === 'date'">
       <div v-if="!!val">{{ moment.from(val, 'en').format('jYYYY/jMM/jDD📅') }}</div>
     </div>
@@ -106,7 +106,7 @@
 
 <script>
 import * as moment from 'jalali-moment'
-import {ref} from "@vue/composition-api";
+import {ref} from "vue";
 
 export default {
   name: "SDataGridCell",

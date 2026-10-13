@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <q-page class="fullscreen">
     <q-inner-loading :showing="isLoading">
       در حال دریافت اطلاعات

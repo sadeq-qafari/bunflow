@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="flex row items-center justify-between bg-grey-4 rounded-borders">
     <div class="col-10">
       <Map :latitude="model && model.latitude || 0" :zoom-control="false"
@@ -15,8 +15,8 @@
         <q-card-section>
           <q-select class="flex col-md-5"
                     dense
-                    @input="setLocationFromSearch"
-                    :value="locationLabel"
+                    @update:model-value="setLocationFromSearch"
+                    :model-value="locationLabel"
                     use-input
                     hide-selected
                     label="جستجو"
@@ -69,10 +69,10 @@
           </q-item>
         </q-card-section>
         <q-card-section class="flex row justify-around">
-          <q-input class="col-5" outlined dense label="عرض جغرافیایی" :value="model && model.latitude"
-                   @input="onInputManual($event,'latitude')"/>
-          <q-input class="col-5" outlined dense label="طول جغرافیایی" :value="model && model.longitude"
-                   @input="onInputManual($event,'longitude')"/>
+          <q-input class="col-5" outlined dense label="عرض جغرافیایی" :model-value="model && model.latitude"
+                   @update:model-value="onInputManual($event,'latitude')"/>
+          <q-input class="col-5" outlined dense label="طول جغرافیایی" :model-value="model && model.longitude"
+                   @update:model-value="onInputManual($event,'longitude')"/>
         </q-card-section>
 
       </q-card>

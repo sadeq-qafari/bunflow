@@ -4,8 +4,8 @@
   </div>
 </template>
 <script>
-import {defineComponent} from '@vue/composition-api'
-import {version} from "../package.json";
+import {defineComponent} from 'vue'
+import appPackage from "../package.json";
 import * as moment from 'jalali-moment'
 
 export default defineComponent({
@@ -18,7 +18,7 @@ export default defineComponent({
 
         let text = `<b>Browser: </b>${this.$q.platform.is.name} ${this.$q.platform.is.version}\n`
         text += `<b>OS: </b>${this.$q.platform.is.platform}\n`
-        text += `<b>AppVersion: </b>${version}\n`
+        text += `<b>AppVersion: </b>${appPackage.version}\n`
         this.$store.state.user ? text += `<b>User: </b>${this.$store.state.user.given_name} ${this.$store.state.user.family_name}\n<b>UserId: </b>${this.$store.state.user.sub}\n<b>UserName: </b>${this.$store.state.user.username}\n` : undefined;
         this.$store.state.tenant ? text += `<b>Tenant: </b>${this.$store.state.tenant.title}\n` : undefined
         text += `<b>Current Url: </b>${location.href}\n`

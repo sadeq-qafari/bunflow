@@ -39,8 +39,8 @@
           <q-input
             class="q-pa-sm"
             dir="ltr"
-            :value="username"
-            @input="onInputUserName"
+            :model-value="username"
+            @update:model-value="onInputUserName"
             :label="$t('login.username')"
             borderless
             type="text"
@@ -50,7 +50,7 @@
           <q-input
             class="q-pa-sm"
             dir="ltr"
-            v-model="password"
+            v-model:model-value="password"
             :label="$t('login.password')"
             borderless
             :type="showPassword ? 'text' : 'password'"
@@ -91,7 +91,7 @@
 <script lang="ts">
 
 
-import {defineComponent} from '@vue/composition-api'
+import {defineComponent} from 'vue'
 import {api, IMenu} from "boot/api";
 
 export default defineComponent({

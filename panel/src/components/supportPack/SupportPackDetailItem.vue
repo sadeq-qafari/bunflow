@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="row full-width bg-grey-2 border-radius q-pa-md">
 
     <!-- header -->
@@ -217,7 +217,7 @@
             <div v-if="edit" class="col-3">
               <q-input v-model="detailItem.totalQuantity" bg-color="white" type="number" label="تعداد کل"
                        :disable="!!detailItem.isDonation" outlined dense
-                       @input="validate"/>
+                       @update:model-value="validate"/>
             </div>
 
             <!-- quantity -->
@@ -227,7 +227,7 @@
               <q-input v-if="edit && type.isNonCash" v-model="detailItem.quantity" bg-color="white" type="number" label="تعداد"
                        outlined
                        dense
-                       @input="validate"/>
+                       @update:model-value="validate"/>
 
               <!-- view -->
               <div v-else-if="type.isNonCash" class="row full-width items-center">

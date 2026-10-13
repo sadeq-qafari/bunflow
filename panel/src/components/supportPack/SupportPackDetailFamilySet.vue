@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="full-width border-radius border-solid q-pa-md">
     <div class="full-width q-gutter-y-md">
 
@@ -10,7 +10,7 @@
 
         <!-- select all families -->
         <div v-if="!isConfirmed" class="row col-auto q-pr-md items-center">
-          <q-checkbox size="md" :value="totalAssignment" @input="setAllOptions" dense/>
+          <q-checkbox size="md" :model-value="totalAssignment" @update:model-value="setAllOptions" dense/>
         </div>
 
         <!--        </div>-->
@@ -63,13 +63,13 @@
               <div class="col-3">
 
                 <!-- assigned and submitted -->
-                <q-checkbox v-if="family.isAssigned" :value="true" class="q-pa-md" color="grey"
+                <q-checkbox v-if="family.isAssigned" :model-value="true" class="q-pa-md" color="grey"
                             :label="`${family.familyTitle} (${family.familyMembersCount})`"
                             dense/>
 
                 <!-- newly assigned -->
                 <q-checkbox v-else v-model="newSelectedFamilies" class="q-pa-md" :val="family.familyId"
-                            :label="`${family.familyTitle} (${family.familyMembersCount})`" @input="checkSelectedFamily"
+                            :label="`${family.familyTitle} (${family.familyMembersCount})`" @update:model-value="checkSelectedFamily"
                             :disable="isConfirmed" dense/>
 
               </div>
@@ -301,8 +301,8 @@
 
                 <!-- assignment -->
                 <div class="row col q-px-sm justify-end">
-                  <q-input class="input-quantity" :value="getDialogItemValue(item.id)"
-                           @input="setDialogItemValue(item.id, $event)"
+                  <q-input class="input-quantity" :model-value="getDialogItemValue(item.id)"
+                           @update:model-value="setDialogItemValue(item.id, $event)"
                            input-class="text-center"
                            style="height: 25px" borderless rounded dense>
 

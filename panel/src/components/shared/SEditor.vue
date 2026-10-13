@@ -1,12 +1,12 @@
-﻿<template>
+<template>
   <div class="column">
     <span class="q-mb-sm">{{ label }}</span>
     <q-editor
       ref="editor"
-      :value="value"
-      @input="$emit('input', $event)"
-      @paste.native="evt => pasteCapture(evt)"
-      @drop.native="evt => dropCapture(evt)"
+      :model-value="value"
+      @update:model-value="$emit('input', $event)"
+      @paste="evt => pasteCapture(evt)"
+      @drop="evt => dropCapture(evt)"
       :dense="$q.screen.lt.md"
       :definitions="{
         upload: {
@@ -108,7 +108,7 @@
     />
     <q-file v-show="false"
             v-model="file"
-            @input="uploadImage"
+            @update:model-value="uploadImage"
             ref="fileInput"
             label="Pick one file"
             filled

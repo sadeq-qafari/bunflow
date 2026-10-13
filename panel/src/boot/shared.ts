@@ -238,40 +238,24 @@ Object.defineProperty(commentElement, 'setAttribute', {
   value: () => undefined,
 });
 
-function convertHtmlElementToComment(el: any, vnode: any) {
-  vnode.elm = commentElement;
-  vnode.text = ' ';
-  vnode.isComment = true;
-  vnode.context = undefined;
-  vnode.tag = undefined;
-  vnode.data.directives = undefined;
-
-  if (vnode.componentInstance) {
-    (vnode.componentInstance as any).$el = commentElement;
-  }
-
-  if (el.parentNode) {
-    el.parentNode.replaceChild(commentElement, el);
-  }
-}
-
-export default boot(({Vue, store, router}) => {
+export default boot(({app, store, router}) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   if (!process.env.FLOW_STANDALONE) store.dispatch('load')
-  Vue.prototype.$randomColor = randomColor
-  Vue.prototype.$navigateBack = async function () {
+  const globals = app.config.globalProperties
+  globals.$randomColor = randomColor
+  globals.$navigateBack = async function () {
     let previousRoute = sessionStorage.getItem('previousRoute')
     if (previousRoute)
       await router.push({path: previousRoute})
     else router.back()
   }
-  Vue.prototype.$openReport = openReport
-  Vue.prototype.$screenshot = screenshot
+  globals.$openReport = openReport
+  globals.$screenshot = screenshot
 
-  Vue.directive('permission', (el, binding, vnode: any) => {
-    if (store.getters.hasPermission(binding.value)) return
-
-    convertHtmlElementToComment(el, vnode)
+  app.directive('permission', {
+    mounted(el, binding) {
+      if (!store.getters.hasPermission(binding.value)) el.remove()
+    }
   });
 })
 

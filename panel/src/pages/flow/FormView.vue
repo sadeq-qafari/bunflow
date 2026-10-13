@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <q-page class="q-pa-md" v-if="formData">
     <div class="full-width border-radius bg-white q-pa-md">
 
@@ -16,8 +16,8 @@
 
         <!-- fields -->
         <div v-for="(item, index) of layout" :class="`col-${item.w}`" :key="item.i">
-          <f-form-property :property-id="formData[index].id" v-model="formData[index].value" :loading="isDataLoading"
-                           @input="onInputProp"/>
+          <f-form-property :property-id="formData[index].id" v-model:model-value="formData[index].value" :loading="isDataLoading"
+                           @update:model-value="onInputProp"/>
         </div>
 
 

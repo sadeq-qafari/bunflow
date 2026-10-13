@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="q-pa-md">
     <div class="full-width">
       <div class="column full-width q-mt-none q-pt-md q-gutter-y-md">

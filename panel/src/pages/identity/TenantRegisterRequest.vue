@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="q-gutter-md q-pa-md">
 
     <!-- data grid -->

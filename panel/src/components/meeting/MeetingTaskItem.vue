@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="row full-width bg-grey-2 rounded-borders border-solid q-pa-md">
 
     <!-- header -->
@@ -12,7 +12,7 @@
 
           <!-- edit -->
           <q-input v-if="edit" v-model="detailItem.title" bg-color="white" label="عنوان" outlined dense
-                   @input="validate"/>
+                   @update:model-value="validate"/>
 
           <!-- view -->
           <div v-else class="row full-width items-center">
@@ -158,7 +158,7 @@
 
           <!-- edit -->
           <q-input v-if="edit" v-model="detailItem.description" bg-color="white" label="توضیحات" outlined dense
-                   @input="validate"/>
+                   @update:model-value="validate"/>
 
           <!-- view -->
           <div v-else class="row full-width items-center">

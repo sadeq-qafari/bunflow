@@ -1,7 +1,7 @@
-﻿<template>
-  <q-select :id="id" ref="autoComplete" :value="valueObject" :options="filteredOptions" v-bind="$attrs"
+<template>
+  <q-select :id="id" ref="autoComplete" :model-value="valueObject" :options="filteredOptions" v-bind="$attrs"
             transition-show="jump-down" transition-hide="jump-up" input-debounce="0" fill-input hide-selected use-input
-            borderless dense @filter="filterFnAutoSelect" @input="setValue" @clear="$emit('input',null)"
+            borderless dense @filter="filterFnAutoSelect" @update:model-value="setValue" @clear="$emit('input',null)"
             virtual-scroll-slice-ratio-before="10" virtual-scroll-sticky-size-start="30"
             options-selected-class="bg-primary text-white" @keyup.enter="$emit('onEnterKey', $event)"
             @keyup="checkBackspace($event)"

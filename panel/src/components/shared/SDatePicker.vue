@@ -1,6 +1,6 @@
-﻿<template>
+<template>
   <div class="row justify-start">
-    <q-input v-if="showDatePicker" v-bind="$attrs" :value="dateValue" @input="onInputDate" mask="date"
+    <q-input v-if="showDatePicker" v-bind="$attrs" :model-value="dateValue" @update:model-value="onInputDate" mask="date"
              :label="dateLabel"
              :input-style="{direction: 'ltr !important',textAlign:'right'}" ref="dateInput"
              @focusout="refresh('date')"
@@ -10,13 +10,13 @@
         <q-icon name="event" class="cursor-pointer">
           <q-popup-proxy ref="qDateProxy" transition-show="jump-down" transition-hide="jump-up" anchor="bottom end"
                          self="top start">
-            <q-date calendar="persian" :value="dateValue" @input="onInputDate" :target="$refs.dateInput"
+            <q-date calendar="persian" :model-value="dateValue" @update:model-value="onInputDate" :target="$refs.dateInput"
                     :options="limitDate"/>
           </q-popup-proxy>
         </q-icon>
       </template>
     </q-input>
-    <q-input v-if="showTimePicker" v-bind="$attrs" :value="timeValue" @input="onInputTime" mask="time"
+    <q-input v-if="showTimePicker" v-bind="$attrs" :model-value="timeValue" @update:model-value="onInputTime" mask="time"
              :label="timeLabel" :class="timeClass"
              @focusout="refresh('time')" :input-style="{direction: 'ltr !important',textAlign:'right'}"
              :rules="type === 'time'? rules :[val=> val === '' || !!val || 'ساعت به درستی وارد نشده است']"

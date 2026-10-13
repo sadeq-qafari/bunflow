@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="row">
     <q-table
       :class="['col-12 border-radius overflow-hidden',!isMobile?'data-grid-max-height':undefined]"
@@ -9,10 +9,10 @@
       :separator="isMobile ? undefined : 'vertical'"
       :loading="loading"
       :title="model && model.title"
-      :data="data"
+      :rows="data"
       :columns="columns"
       row-key="id"
-      :pagination.sync="pagination"
+      v-model:pagination="pagination"
       :visible-columns="visibleColumns"
       @request="onRequest"
       ref="datagrid"
@@ -22,8 +22,8 @@
       <template v-slot:top="props">
         <q-tabs dense class="bg-grey-2 full-width" v-if="filterTabs.length>1"
                 align="start"
-                v-model="filterTabId"
-                @input="doFilter"
+                v-model:model-value="filterTabId"
+                @update:model-value="doFilter"
                 active-color="primary"
                 active-bg-color="white"
                 indicator-color="white"
@@ -69,7 +69,7 @@
                 <q-card>
                   <q-card-section>
                     <q-option-group
-                      v-model="visibleColumns"
+                      v-model:model-value="visibleColumns"
                       :options="visibleColumnsOptions"
                       type="toggle"
                     />
@@ -276,7 +276,7 @@
 <script>
 import SDialog from "components/shared/SDialog";
 import SFilterDialog from "components/shared/SFilterDialog";
-import {ref} from '@vue/composition-api'
+import {ref} from 'vue'
 import SDataGridFilter from "components/shared/SDataGridFilter";
 import * as moment from 'jalali-moment'
 import SFilterInput from "./SFilterInput";
@@ -381,7 +381,6 @@ export default {
       return filterTabs
     },
     filterChips() {
-      this.filterChipIds = this.filterChipIds.concat([])
       let filterChips = []
       let filters = this.model.filters
       if (filters && filters?.filter(x => x.typeLookup == 2)?.length > 0) {
@@ -988,7 +987,7 @@ export default {
   unmounted() {
     document.removeEventListener('keydown', this.keydown);
   },
-  destroyed() {
+  unmounted() {
     document.removeEventListener('keydown', this.keydown);
   }
 }

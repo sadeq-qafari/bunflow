@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div :class="`col-xs-12 col-sm-6 col-md-${property.viewSize || 4} col-lg-${property.viewSize || 3}`">
     <div class="row">
       <component class="col-12" :is="componentName" v-bind="props" v-on="events"

@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <q-dialog
     v-model="showDialog"
     persistent
@@ -57,7 +57,7 @@
 
 <script>
 import SInput from 'components/shared/SInput'
-import {ref} from "@vue/composition-api";
+import {ref} from "vue";
 
 export default {
   name: 'SModelDialog',

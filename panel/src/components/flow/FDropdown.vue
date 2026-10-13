@@ -1,8 +1,7 @@
-﻿<template>
+<template>
   <q-select
-    v-else
-    :value="selectedOption"
-    @input="onInput"
+        :model-value="selectedOption"
+    @update:model-value="onInput"
     clearable
     use-input
     hide-selected
@@ -45,7 +44,7 @@ export default {
 
 
   props: {
-    value: Object | null,
+    modelValue: Object | null,
     lookup: {
       type: Object | null,
       default: null
@@ -81,7 +80,7 @@ export default {
 
     onInput(event) {
       this.selectedOption = event
-      this.$emit('input', event?.value)
+      this.$emit('update:modelValue', event?.value)
     },
 
 
@@ -111,7 +110,7 @@ export default {
 
 
     async getFormDropdownValue() {
-      const res = await this.$axios.get(`${process.env.API_URL}/flow/form/dropdown/${this.formName}?Id=${this.value || 0}`)
+      const res = await this.$axios.get(`${process.env.API_URL}/flow/form/dropdown?formId=${this.formName}&ids=${this.modelValue || 0}`)
       if (res.data.success && res.data.result) {
         let item = res.data.result[0] || {}
         let valueKey = Object.keys(item)[0] //|| 'Id'
@@ -124,7 +123,7 @@ export default {
 
 
     getLookupDropdownValue() {
-      let item = this.lookup.options.find(x => x.value == this.value)
+      let item = this.lookup.options.find(x => x.value == this.modelValue)
       this.selectedOption = {value: item.value, label: item.title, ...item}
     },
 
@@ -182,13 +181,13 @@ export default {
 
 
   async mounted() {
-    if (this.value)
+    if (this.modelValue)
       await this.getValue()
   },
 
 
   watch: {
-    // async value(to, from) {
+    // async modelValue(to, from) {
     //   if (!from && to > 0) {
     //     await this.getValue()
     //   }

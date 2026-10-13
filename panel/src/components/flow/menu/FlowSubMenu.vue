@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <q-menu v-bind="$attrs" square fit>
     <q-list dense style="min-width: 100px">
       <q-item v-for="menu of menus" v-close-popup="!!menu.link" :to="!!menu.link?menu.link:undefined" :active="$route.path==menu.link" active-class="text-white bg-primary">

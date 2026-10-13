@@ -80,7 +80,7 @@ import SidebarMenu from "components/layout/SidebarMenu";
 import ProfileMenu from "components/layout/ProfileMenu";
 import Notification from "components/layout/Notification";
 import * as moment from "jalali-moment";
-import {version} from "../../package.json";
+import appPackage from "../../package.json";
 import Chat from "../components/layout/Chat";
 import TenantMenu from "../components/layout/TenantMenu";
 import ExpandingSidebarMenu from "../components/layout/ExpandingSidebarMenu";
@@ -98,7 +98,7 @@ export default {
         .locale("fa")
         .format(`${this.getDay(moment().day())} - jYYYY/jMM/jDD`),
       date: moment().locale("en").format(" dddd - YYYY/MM/DD"),
-      version,
+      version: appPackage.version,
       incompleteInfo: [],
       needsUpdate: false,
       needsUpdateInterVal: null
@@ -212,7 +212,7 @@ export default {
       }
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     if (this.needsUpdateInterVal)
       clearInterval(this.needsUpdateInterVal);
   }

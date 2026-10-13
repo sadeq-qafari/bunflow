@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <q-page class="q-pa-md">
     <div class="row justify-between">
       <q-card class="col-4 " flat>

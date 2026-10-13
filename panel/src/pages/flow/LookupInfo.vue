@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <q-page class="q-pa-md">
     <!-- header -->
     <div class="row full-width border-radius bg-white q-pa-md justify-between items-center">

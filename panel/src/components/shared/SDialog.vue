@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <q-dialog
     v-model="showDialog"
     persistent

@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="q-gutter-md q-pa-md">
     <div v-if="service && model">
       <q-card v-if="values">
@@ -28,20 +28,20 @@
                 <q-card>
                   <q-card-section>
                     <div class="text-bold flex row">
-                      <q-checkbox :value="getServiceValue(models)" @input="setServiceValue(models)" :label="service"
+                      <q-checkbox :model-value="getServiceValue(models)" @update:model-value="setServiceValue(models)" :label="service"
                                   color="indigo" class="col-3"/>
-                      <q-checkbox :value="getServiceKeyValue(models,'create')" @input="setServiceKeyValue(models,'create')"
+                      <q-checkbox :model-value="getServiceKeyValue(models,'create')" @update:model-value="setServiceKeyValue(models,'create')"
                                   label="allCreates" color="indigo" class="col-2"/>
-                      <q-checkbox :value="getServiceKeyValue(models,'read')" @input="setServiceKeyValue(models,'read')"
+                      <q-checkbox :model-value="getServiceKeyValue(models,'read')" @update:model-value="setServiceKeyValue(models,'read')"
                                   label="allReads" color="indigo" class="col-2"/>
-                      <q-checkbox :value="getServiceKeyValue(models,'update')" @input="setServiceKeyValue(models,'update')"
+                      <q-checkbox :model-value="getServiceKeyValue(models,'update')" @update:model-value="setServiceKeyValue(models,'update')"
                                   label="allUpdates" color="indigo" class="col-2"/>
-                      <q-checkbox :value="getServiceKeyValue(models,'delete')" @input="setServiceKeyValue(models,'delete')"
+                      <q-checkbox :model-value="getServiceKeyValue(models,'delete')" @update:model-value="setServiceKeyValue(models,'delete')"
                                   label="allDeletes" color="indigo" class="col-2"/>
                     </div>
                     <div v-for="(permissions, model, index) in models" class="full-width flex row items-center">
                       <div class="col-3">
-                        <q-checkbox :value="getModelValue(permissions)" @input="setModelValue(permissions)" :label="model"
+                        <q-checkbox :model-value="getModelValue(permissions)" @update:model-value="setModelValue(permissions)" :label="model"
                                     color="blue"/>
                       </div>
                       <div v-for="(value,permission) of permissions" class="col-2">
@@ -76,7 +76,7 @@
 </template>
 
 <script>
-import {defineComponent, ref} from '@vue/composition-api'
+import {defineComponent, ref} from 'vue'
 import SDataGrid from "components/shared/SDataGrid.vue";
 import SInput from "../../components/shared/SInput";
 

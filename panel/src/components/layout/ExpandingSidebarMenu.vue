@@ -1,11 +1,11 @@
-﻿<template>
+<template>
   <div class="full-width full-height">
 
     <!-- search field -->
     <div class="full-width q-pa-xs bg-grey-4" style="position: sticky; top: 0; z-index: 10">
       <div style="border-radius: 10px" class="overflow-hidden bg-white">
-        <q-input ref="searchField" dense borderless bg-color="transparent" label="جستجو" :value="searchValue"
-                 @input="onSearchInput($event)" debounce="200">
+        <q-input ref="searchField" dense borderless bg-color="transparent" label="جستجو" :model-value="searchValue"
+                 @update:model-value="onSearchInput($event)" debounce="200">
           <template v-slot:prepend>
             <q-icon class="q-pl-xs" name="search"/>
           </template>
@@ -63,7 +63,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref} from '@vue/composition-api'
+import {defineComponent, ref} from 'vue'
 import {IMenu} from "boot/api";
 import MenuItem from "components/layout/MenuItem.vue";
 

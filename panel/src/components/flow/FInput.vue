@@ -1,5 +1,5 @@
-﻿<template>
-  <q-input v-else :value="value" class="col" v-bind="$attrs" outlined dense @input="onInput($event)"
+<template>
+  <q-input :model-value="modelValue" class="col" v-bind="$attrs" outlined dense @update:model-value="onInput($event)"
            @click="selectItem()"/>
 </template>
 
@@ -7,14 +7,14 @@
 export default {
   name: "FInput",
   props: {
-    value: Object | null
+    modelValue: Object | null
   },
   methods: {
     selectItem() {
       this.$emit('select-item')
     },
     onInput(event) {
-      this.$emit('input', event)
+      this.$emit('update:modelValue', event)
     }
   }
 }

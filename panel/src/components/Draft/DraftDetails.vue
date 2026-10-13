@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="row full-width">
 
     <!-- first list -->

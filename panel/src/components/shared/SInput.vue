@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div v-show="visible" :class="`col-xs-12 col-sm-6 col-md-${property.viewSize || 3} col-lg-${property.viewSize || 3}`">
     <component class="full-width" :is="componentName" v-bind="props" v-on="events"
                :value="model ? getValue(model.value) : undefined" ref="component" :disable="disable"

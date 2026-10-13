@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="q-pa-md">
     <tab-layout v-model="modelName" :page-title="pageTitle" :tabs="tabs" :on-tab-change="updateRoute">
 

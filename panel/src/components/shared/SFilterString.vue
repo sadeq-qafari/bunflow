@@ -1,6 +1,6 @@
-﻿<template>
+<template>
   <q-input :label="hideLabel?undefined:label" :outlined="outlined" :placeholder="placeholder" :dense="dense"
-           :debounce="500" v-model="value.value[0]" @input="update(0, $event)" input-style="padding:0">
+           :debounce="500" v-model="value.value[0]" @update:model-value="update(0, $event)" input-style="padding:0">
     <template v-slot:prepend>
       <q-tooltip>{{ filterLabel }}</q-tooltip>
       <q-btn-dropdown size="xs" class="q-pr-none" :dropdown-icon="filterIcon" unelevated stretch padding="0px" dense style="right: -12px;

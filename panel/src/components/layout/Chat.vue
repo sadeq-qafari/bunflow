@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="flex column full-height"
   style="background-image: url('img/chat-background.jpg');
   background-repeat: repeat;">
@@ -36,7 +36,7 @@
             <q-btn round dense flat icon="o_attach_file" @click="selectFile"/>
           </template>
         </q-input>
-        <q-file v-show="false" :value="file" @input="updateFiles" ref="file"/>
+        <q-file v-show="false" :model-value="file" @update:model-value="updateFiles" ref="file"/>
       </div>
     </div>
   </div>

@@ -1,6 +1,6 @@
-﻿<template>
+<template>
   <div>
-    <q-input dir="ltr" v-bind="$attrs" :value="getValue(value)" @input="onInput" :borderless="borderless" :dense="dense"
+    <q-input dir="ltr" v-bind="$attrs" :model-value="getValue(value)" @update:model-value="onInput" :borderless="borderless" :dense="dense"
              :bottom-slots="bottomSlots">
       <template v-if="bottomSlots" v-slot:hint>
         {{ num2persian(value) }}

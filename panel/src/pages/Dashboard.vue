@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <q-page class="full-width">
 
     <!-- header -->
@@ -58,8 +58,8 @@
 
       <!-- reports selection -->
       <q-card-section class="row">
-        <q-checkbox class="col-12 col-md-3" :label="item.title" :value="getSelectedReport(item)"
-                    @input="selectReport(item)"
+        <q-checkbox class="col-12 col-md-3" :label="item.title" :model-value="getSelectedReport(item)"
+                    @update:model-value="selectReport(item)"
                     v-for="item of allReports" :key="JSON.stringify(item)"/>
       </q-card-section>
 
@@ -102,7 +102,7 @@
 
 <script>
 import SWidget from "components/shared/SWidget";
-import {defineComponent} from "@vue/composition-api";
+import {defineComponent} from "vue";
 import SReport from "components/shared/SReport";
 
 export default defineComponent({

@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div :class="['bg-grey-2 column no-wrap SEditorPro',fullscreen?'fullscreen':'rounded-borders mini-editor']">
     <q-toolbar class="col-auto ">
       <div class="text-subtitle1">
@@ -15,7 +15,7 @@
       <q-btn dense flat color="white" text-color="primary" :icon="fullscreen? 'fullscreen_exit':'fullscreen'"
              @click="toggleFullscreen"/>
     </q-toolbar>
-    <ckeditor :editor="editor" :value="value" @input="$emit('input',$event )" :config="editorConfig" @ready="onReady"/>
+    <ckeditor :editor="editor" :model-value="value" @update:model-value="$emit('input', $event)" :config="editorConfig" @ready="onReady"/>
   </div>
 </template>
 

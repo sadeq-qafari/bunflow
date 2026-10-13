@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <q-page class="q-pa-md">
 <f-multi-dropdown :lookup="lookup" v-model="text" label="شهر" dense outlined/>
    t: {{ text }}
@@ -89,7 +89,7 @@ export default {
   },
   mounted() {
   },
-  beforeDestroy() {
+  beforeUnmount() {
   },
   methods: {
     filterFn(val, update) {

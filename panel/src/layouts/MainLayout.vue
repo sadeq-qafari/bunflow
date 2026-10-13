@@ -1,8 +1,8 @@
 <template>
-  <q-layout view="hHh Rpr fFf" class="flow-layout">
+  <q-layout view="hHh Lpr fFf" class="flow-layout" :class="{'flow-layout--designer': isDesigner}">
     <q-header class="flow-header print-hide" bordered>
       <q-toolbar class="flow-toolbar">
-        <q-btn class="mobile-menu flow-icon-button" flat round dense icon="menu" aria-label="باز کردن منو" @click="left = !left"/>
+        <q-btn v-if="!isDesigner" class="mobile-menu flow-icon-button" flat round dense icon="menu" aria-label="باز کردن منو" @click="left = !left"/>
         <router-link to="/flow" class="flow-brand">
           <q-avatar size="34px" class="flow-brand-mark">
             <q-img v-if="logo" :src="logo" contain/>
@@ -17,7 +17,7 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="left" side="right" bordered :width="272" :breakpoint="850" class="flow-sidebar">
+    <q-drawer v-if="!isDesigner" v-model="left" side="left" bordered :width="272" :breakpoint="850" class="flow-sidebar">
       <div class="flow-sidebar-inner">
         <div class="flow-nav-label">فضای کاری</div>
         <q-item clickable to="/flow" exact active-class="flow-nav-active" class="flow-nav-item">
@@ -90,6 +90,7 @@ export default {
     return this.meta;
   },
   computed: {
+    isDesigner() { return this.$route.path === "/service/flow/form/info" },
     formItems() {
       return this.$store.getters.getForms() || []
     },
@@ -242,10 +243,6 @@ export default {
   .flow-toolbar-menu { display: none; }
   .flow-version { display: none; }
 }
-@media (min-width: 851px) {
-  // Quasar's RTL layout reserves the right drawer on the physical left. This
-  // shell keeps the drawer on the right and mirrors that reserved space here.
-  .flow-layout .q-page-container { padding-left: 0 !important; padding-right: 272px !important; }
-}
+.flow-layout--designer .q-page-container { padding-left: 0 !important; padding-right: 0 !important; }
 </style>
 

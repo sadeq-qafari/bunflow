@@ -1,6 +1,14 @@
 <template>
-  <q-page class="q-pa-md column">
-    <q-card flat>
+  <q-page class="flow-page column">
+    <div class="flow-page-heading">
+      <div>
+        <div class="flow-eyebrow">انتقال داده</div>
+        <h1 class="flow-page-title">ورود اطلاعات به {{ form && form.title }}</h1>
+        <div class="flow-page-subtitle">یک فایل Excel انتخاب کنید و ردیف‌های موردنظر را وارد کنید.</div>
+      </div>
+      <q-btn flat no-caps icon="arrow_forward" label="بازگشت به رکوردها" class="flow-back-button" :to="`/flow/${formName}`"/>
+    </div>
+    <q-card flat class="flow-surface flow-import-card">
       <q-card-section class="q-pa-none">
         <div class="q-pa-md q-gutter-sm">
           <q-banner inline-actions rounded class="bg-grey-2 text-grey-9">
@@ -19,10 +27,10 @@
             </div>
             <template v-slot:action>
               <div class="rounded-borders overflow-hidden row" v-if="forms">
-                <q-btn unelevated class="q-px-md no-margin" color="positive" text-color="white" padding="8px 16px"
+                <q-btn unelevated class="q-px-md no-margin flow-action-primary" padding="8px 16px"
                        :loading="isSubmitting" label="ثبت" @click="submit" :disabled="selectedItemsCount==0"/>
                 <div class="q-px-xs"></div>
-                <q-btn unelevated class="q-px-md no-margin" color="negative" text-color="white" padding="8px 6px"
+                <q-btn unelevated class="q-px-md no-margin flow-secondary-button" padding="8px 6px"
                        label="انصراف" @click="forms = null"/>
               </div>
               <div class="row" v-else>
@@ -236,6 +244,12 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.flow-import-card { overflow: hidden; }
+.flow-import-card > .q-card__section { padding: 18px 20px; }
+.flow-back-button { color: #59657a; }
+</style>
 
 <style lang="scss">
 .file-input-text-color {

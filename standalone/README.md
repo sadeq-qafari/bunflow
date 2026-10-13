@@ -1,5 +1,7 @@
 # Flow standalone
 
+**Persian user manual:** [راهنمای کامل کاربری فارسی](../docs/user-manual-fa.md) — installation, form design, records, Excel, backups, and troubleshooting.
+
 An alternative backend for Flow's Vue 3 / Quasar 2 panel. A single Bun executable serves the compiled panel, provides its core API contracts, and stores definitions, records, sessions, import previews, and uploaded files in SQLite. SQL Server, Redis, .NET, the gateway, and the other services are not needed for this mode.
 
 ## Run the Linux x64 executable

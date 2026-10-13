@@ -1,76 +1,58 @@
 <template>
-  <q-layout view="hHh Lpr fFf" class="bg-blue-grey-1">
-    <q-header class="bg-transparent print-hide" bordered>
-      <div class="header text-grey-14 full-height">
-        <q-toolbar class="row">
-          <!--          <q-btn dense flat round icon="menu" @click="left = !left"/>-->
-          <q-toolbar-title class="row items-center col-auto">
-            <q-avatar square>
-              <q-img :src="logo" contain style="max-height: 38px"/>
-            </q-avatar>
-
-            {{ tenantInfo && tenantInfo.title }}
-
-          </q-toolbar-title>
-          <q-separator class="q-mx-sm" vertical inset/>
-          <flow-menu class="col"></flow-menu>
-          <q-separator class="q-mx-sm" vertical inset/>
-
-          <q-space/>
-          <profile-menu class="col-auto" @switch-menu="switchMenu()"/>
-        </q-toolbar>
-      </div>
-
+  <q-layout view="hHh Rpr fFf" class="flow-layout">
+    <q-header class="flow-header print-hide" bordered>
+      <q-toolbar class="flow-toolbar">
+        <q-btn class="mobile-menu flow-icon-button" flat round dense icon="menu" aria-label="باز کردن منو" @click="left = !left"/>
+        <router-link to="/flow" class="flow-brand">
+          <q-avatar size="34px" class="flow-brand-mark">
+            <q-img v-if="logo" :src="logo" contain/>
+            <q-icon v-else name="data_object" size="21px"/>
+          </q-avatar>
+          <span class="flow-brand-name">{{ tenantInfo && tenantInfo.title || 'Flow' }}</span>
+        </router-link>
+        <div class="flow-toolbar-menu"><flow-menu/></div>
+        <q-space/>
+        <small class="flow-version" @click="$router.push('/service/changeLog')">نسخه {{ version }}</small>
+        <profile-menu class="col-auto" @switch-menu="switchMenu()"/>
+      </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="left" side="left" behavior="mobile">
-      <!--      <sidebar-menu v-if="classicSidebar" ref="sidebar"/>-->
-      <!--      <expanding-sidebar-menu v-else ref="sidebar"/>-->
+    <q-drawer v-model="left" side="right" bordered :width="272" :breakpoint="850" class="flow-sidebar">
+      <div class="flow-sidebar-inner">
+        <div class="flow-nav-label">فضای کاری</div>
+        <q-item clickable to="/flow" exact active-class="flow-nav-active" class="flow-nav-item">
+          <q-item-section avatar><q-icon name="space_dashboard"/></q-item-section>
+          <q-item-section>نمای کلی</q-item-section>
+        </q-item>
+        <q-item clickable to="/service/flow/form/info" active-class="flow-nav-active" class="flow-nav-item">
+          <q-item-section avatar><q-icon name="add_box"/></q-item-section>
+          <q-item-section>ساخت فرم</q-item-section>
+        </q-item>
+        <div class="flow-nav-label flow-nav-label-spaced">
+          <span>فرم‌های داده</span><span class="flow-count">{{ formItems.length }}</span>
+        </div>
+        <q-scroll-area class="flow-form-nav">
+          <q-item v-for="form in formItems" :key="form.id || form.name" clickable
+                  :to="`/flow/${form.name}`" active-class="flow-nav-active" class="flow-nav-item flow-form-item">
+            <q-item-section avatar><q-icon name="table_chart"/></q-item-section>
+            <q-item-section>
+              <q-item-label>{{ form.title }}</q-item-label>
+              <q-item-label caption>{{ form.name }}</q-item-label>
+            </q-item-section>
+          </q-item>
+          <div v-if="!formItems.length" class="flow-sidebar-empty">هنوز فرمی نساخته‌اید</div>
+        </q-scroll-area>
+        <div class="flow-sidebar-bottom">
+          <div class="flow-sidebar-dot"></div>
+          <span>ذخیره‌سازی محلی فعال است</span>
+        </div>
+      </div>
     </q-drawer>
 
-    <!--    <q-drawer v-model="right" side="right" behavior="mobile">-->
-    <!--      <sidebar-menu/>-->
-    <!--    </q-drawer>-->
+    <q-page-container><router-view/></q-page-container>
 
-    <!--    <q-drawer v-model="right" side="right" behavior="mobile">-->
-    <!--      <user-menu/>-->
-    <!--    </q-drawer>-->
-
-    <q-page-container>
-
-
-      <router-view/>
-    </q-page-container>
-
-    <q-footer bordered class="bg-white text-black layout-footer print-hide">
-      <q-toolbar>
-        <div class="full-width q-pb-sm flex justify-around content-center row">
-          <div class="row">
-            <router-link tag="p" style="cursor: help" to="/service/changeLog"
-            >نسخه: {{ version }}
-              <q-tooltip>
-                <div class="text-center">تاریخ بروزرسانی: {{ updateDate }}</div>
-                <div class="text-center">برای مشاهده تغییرات کلیک کنید</div>
-              </q-tooltip>
-            </router-link>
-            <small
-              id="needsUpdate"
-              v-if="needsUpdate"
-              class="q-mx-md q-px-sm rounded-borders text-blue text-bold cursor-pointer"
-              @click="reload"
-            >
-              <a>
-                <span>نسخه جدید</span>
-                &nbsp;
-                <span>(جهت بروزرسانی کلیک کنید)</span>
-
-              </a>
-            </small>
-          </div>
-          <p>{{ jalaliDate }}</p>
-          <p class="en-text">{{ date }}</p>
-        </div>
-      </q-toolbar>
+    <q-footer v-if="needsUpdate" bordered class="flow-update-footer print-hide">
+      <div id="needsUpdate" class="cursor-pointer" @click="reload">نسخه جدید آماده است · برای بروزرسانی کلیک کنید</div>
     </q-footer>
   </q-layout>
 </template>
@@ -92,7 +74,7 @@ export default {
   data() {
     return {
       classicSidebar: false,
-      left: false,
+      left: true,
       right: false,
       jalaliDate: moment()
         .locale("fa")
@@ -108,6 +90,9 @@ export default {
     return this.meta;
   },
   computed: {
+    formItems() {
+      return this.$store.getters.getForms() || []
+    },
     isMobile() {
       return this.$q.screen.lt.md;
     },
@@ -208,7 +193,6 @@ export default {
     onKeyUp(e) {
       if (e.ctrlKey === true && e.key === 'q') {
         this.left = !this.left
-        this.$refs.sidebar.focusOnSearch()
       }
     }
   },
@@ -219,21 +203,44 @@ export default {
 };
 </script>
 <style lang="scss">
-.header {
-  background-color: $headerColor;
-}
+.flow-layout { background: #f5f7fb; }
+.flow-header { background: #fff; color: #202a3b; border-bottom: 1px solid #e5e9f1; }
+.flow-toolbar { min-height: 66px; padding: 0 24px; gap: 16px; }
+.flow-brand { display: flex; align-items: center; gap: 10px; color: inherit; text-decoration: none; min-width: 190px; }
+.flow-brand-mark { background: #eeedff; color: #4f46e5; border-radius: 11px; }
+.flow-brand-name { font-size: 15px; font-weight: 700; max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.flow-toolbar-menu { display: flex; align-items: center; min-width: 0; }
+.flow-version { color: #8993a5; cursor: pointer; margin-inline-end: 10px; }
+.flow-sidebar { color: #354055; }
+.flow-sidebar-inner { display: flex; flex-direction: column; height: 100%; padding: 18px 14px 12px; }
+.flow-nav-label { display: flex; justify-content: space-between; align-items: center; padding: 12px 12px 7px; color: #929bad; font-size: 11px; font-weight: 700; }
+.flow-nav-label-spaced { margin-top: 18px; }
+.flow-count { background: #f0f2f7; color: #737f93; border-radius: 20px; min-width: 22px; text-align: center; padding: 1px 6px; }
+.flow-nav-item { border-radius: 9px; margin: 2px 0; color: #59657a; font-size: 13px; }
+.flow-nav-item .q-icon { color: #929bad; font-size: 19px; }
+.flow-nav-active { background: #eeedff !important; color: #4338ca !important; font-weight: 600; }
+.flow-nav-active .q-icon { color: #4f46e5; }
+.flow-form-nav { flex: 1; min-height: 80px; }
+.flow-form-item { min-height: 54px; }
+.flow-form-item .q-item__label--caption { color: #9aa3b2; font-size: 10px; }
+.flow-sidebar-empty { padding: 14px 12px; font-size: 12px; color: #9aa3b2; }
+.flow-sidebar-bottom { display: flex; align-items: center; gap: 8px; padding: 14px 10px 4px; color: #8b95a6; font-size: 11px; border-top: 1px solid #edf0f5; }
+.flow-sidebar-dot { width: 7px; height: 7px; border-radius: 50%; background: #20a36a; box-shadow: 0 0 0 3px #e5f6ed; }
+.mobile-menu { display: none; }
+.flow-update-footer { background: #4338ca; color: #fff; text-align: center; padding: 10px; }
+.red-alert { background-color: #d14343; color: white !important; }
 
-.layout-footer {
-  height: 25px;
+@media (max-width: 850px) {
+  .flow-toolbar { min-height: 58px; padding: 0 12px; gap: 8px; }
+  .mobile-menu { display: inline-flex; }
+  .flow-brand { min-width: 0; }
+  .flow-toolbar-menu { display: none; }
+  .flow-version { display: none; }
 }
-
-.my-content2 {
-  padding: 10px 15px;
-}
-
-.red-alert {
-  background-color: red;
-  color: white !important;
+@media (min-width: 851px) {
+  // Quasar's RTL layout reserves the right drawer on the physical left. This
+  // shell keeps the drawer on the right and mirrors that reserved space here.
+  .flow-layout .q-page-container { padding-left: 0 !important; padding-right: 272px !important; }
 }
 </style>
 

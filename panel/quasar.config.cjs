@@ -90,7 +90,7 @@ module.exports = configure(function (ctx) {
       // Applies only if "transpile" is set to true.
       transpileDependencies: ['/ckeditor5-[^/\\]+[/\\]src[/\\].+\.js$/'],
 
-      rtl: true, // https://quasar.dev/options/rtl-support
+      rtl: { source: 'ltr' }, // Quasar CSS is LTR; application styles are authored for RTL.
       // preloadChunks: true,
       // showProgress: false,
       // gzip: true,
@@ -132,6 +132,17 @@ module.exports = configure(function (ctx) {
       //#region CKEditor
 
       chainWebpack: config => {
+        // The legacy editor still uses PostCSS loader 3. Quasar's webpack 5
+        // rules need loader 8 to apply postcssOptions, including RTL mirroring.
+        const quasarPostCssLoader = require.resolve('postcss-loader', {
+          paths: [path.dirname(require.resolve('@quasar/app-webpack/package.json'))]
+        })
+        for (const language of ['css', 'scss', 'sass', 'stylus', 'less']) {
+          for (const variant of ['modules-query', 'modules-ext', 'normal']) {
+            config.module.rule(language).oneOf(variant).use('postcss-loader').loader(quasarPostCssLoader)
+          }
+        }
+
         config.resolve.alias.set(
           '@quasar/extras',
           path.join(path.dirname(require.resolve('@quasar/extras/package.json')), 'exports')

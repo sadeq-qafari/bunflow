@@ -15,8 +15,8 @@
       <div class="row q-col-gutter-lg items-center">
 
         <!-- fields -->
-        <div v-for="(item, index) of layout" :class="`col-${item.w}`" :key="item.i">
-          <f-form-property :property-id="formData[index].id" v-model:model-value="formData[index].value" :loading="isDataLoading"
+        <div v-for="item of layoutFields" :class="`col-12 col-sm-${item.w}`" :key="item.i">
+          <f-form-property :property-id="item.data.id" v-model:model-value="item.data.value" :loading="isDataLoading"
                            @update:model-value="onInputProp"/>
         </div>
 
@@ -95,6 +95,7 @@ export default {
     similarData: []
   }),
   computed: {
+    layoutFields() { return (this.layout || []).map(item=>({...item,data:this.formData?.find(field=>field.index==item.i)})).filter(item=>item.data) },
     formName() {
       return this.$route.params.formName
     },
@@ -113,7 +114,7 @@ export default {
     layout() {
       if (this.form && this.form.layout)
         return JSON.parse(this.form.layout)?.sort((a, b) => {
-          return a.i - b.i
+          return a.y - b.y || a.x - b.x
         })
     }
   },

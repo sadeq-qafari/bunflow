@@ -1,18 +1,18 @@
 <template>
-  <q-page class="q-pa-md" v-if="formData">
-    <div class="full-width border-radius bg-white q-pa-md">
+  <q-page class="flow-page" v-if="formData">
+    <div class="flow-page-heading">
+      <div>
+        <div class="flow-eyebrow">{{ formLeadId > 0 ? 'ویرایش رکورد' : 'رکورد جدید' }}</div>
+        <h1 class="flow-page-title">{{ form && form.title }}</h1>
+        <div class="flow-page-subtitle">اطلاعات را در فیلدهای فرم وارد کنید.</div>
+      </div>
+      <q-btn flat no-caps icon="arrow_forward" label="بازگشت به رکوردها" class="flow-back-button" :to="`/flow/${formName}`"/>
+    </div>
+    <div class="flow-surface flow-record-card">
 
       <!-- form title -->
-      <div class="col-12 q-pb-sm q-mb-md" style="border-bottom: 1px solid #e1e1e1">
-        <div class="text-subtitle1 text-weight-regular row">
-          <div class="text-primary text-underline q-pr-xs">{{ formLeadId>0?('ویرایش'):('ثبت') }}</div>
-
-          <div>{{ form && form.title }}</div>
-
-        </div>
-      </div>
-
-      <div class="row q-col-gutter-md item-center">
+      <div class="flow-record-fields">
+      <div class="row q-col-gutter-lg items-center">
 
         <!-- fields -->
         <div v-for="(item, index) of layout" :class="`col-${item.w}`" :key="item.i">
@@ -24,8 +24,10 @@
 
       </div>
 
+      </div>
+
       <!-- actions -->
-      <div class="row full-width q-gutter-x-md justify-end items-center q-pt-sm q-mt-md" style="border-top: 1px solid #e1e1e1">
+      <div class="flow-record-actions">
 
         <!-- custom actions -->
         <div v-for="action of customActions" class="col-auto">
@@ -43,13 +45,13 @@
 
         <!-- cancel -->
         <div class="col-auto">
-          <q-btn class="full-width border-radius" color="pink-2" text-color="pink-7" label="بازگشت"
-                 :disable="isInProgress" unelevated @click="$router.back()"/>
+          <q-btn class="flow-secondary-button full-width" label="انصراف"
+                 :disable="isInProgress" unelevated :to="`/flow/${formName}`"/>
         </div>
 
         <!-- submit -->
         <div class="col-auto">
-          <q-btn class="full-width border-radius" color="cyan-2" text-color="cyan-7" label="ثبت"
+          <q-btn class="flow-action-primary full-width" :label="formLeadId > 0 ? 'ذخیره تغییرات' : 'ثبت رکورد'"
                  :loading="isInProgress" unelevated @click="submitForm()"/>
         </div>
 
@@ -189,6 +191,16 @@ export default {
 </script>
 
 <style scoped>
-
+.flow-record-card { max-width: 1050px; overflow: hidden; }
+.flow-record-fields { padding: 28px; }
+.flow-record-actions { display: flex; align-items: center; justify-content: flex-start; gap: 10px; padding: 16px 28px; border-top: 1px solid #e5e9f1; background: #fbfcfe; }
+.flow-record-actions > div { min-width: 118px; }
+.flow-secondary-button { background: #f0f2f7; color: #59657a; }
+.flow-back-button { color: #59657a; }
+@media (max-width: 600px) {
+  .flow-record-fields { padding: 20px 16px; }
+  .flow-record-actions { padding: 14px 16px; }
+  .flow-record-actions > div { min-width: 0; flex: 1; }
+}
 </style>
 

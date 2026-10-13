@@ -1,5 +1,5 @@
 <template>
-  <q-table v-if="formData" class="border-radius" v-bind="$attrs" :rows="data" :columns="cols" flat dense
+  <q-table v-if="formData" class="flow-data-table" v-bind="$attrs" :rows="data" :columns="cols" flat dense
            :loading="isLoading"
            v-model:pagination="pagination" @request="getData">
 
@@ -20,70 +20,33 @@
 
     <!-- header -->
     <template v-slot:top>
-      <q-toolbar class="no-padding">
-
-        <!-- icon, title -->
-        <div class="row items-end">
-
-          <!-- icon -->
-          <q-icon class="q-py-xs" name="grid_view" size="sm"/>
-
-          <q-separator class="q-mx-sm" vertical inset/>
-
-          <!-- title -->
-          <h1 class="no-margin text-subtitle1">{{ formData.title }}</h1>
-
+      <div class="flow-grid-toolbar">
+        <div class="flow-grid-title-wrap">
+          <div class="flow-grid-icon"><q-icon name="table_chart"/></div>
+          <div>
+            <div class="flow-grid-title">{{ formData.title }}</div>
+            <div class="flow-grid-subtitle">مدیریت و مرور رکوردها</div>
+          </div>
         </div>
-
-        <q-space/>
-
-        <div class="col-6">
-          <q-input borderless v-model:model-value="pagination.filter"
-                   :class="['search-input bg-grey-1 q-pr-sm',!!pagination.filter && data.length>0?'positive-border':undefined]"
-                   input-class="q-px-md"
-                   placeholder="جستجو" clearable
-                   dense debounce="300" @update:model-value="getData">
-            <template v-slot:append>
-              <q-icon name="search"/>
-            </template>
-          </q-input>
-        </div>
-
-        <q-space/>
-
-        <!-- controls -->
-        <div class="row">
-
-          <!-- add -->
-          <router-link style="text-decoration: none" tag="div" :to="`/flow/${formName}/0`">
-            <q-btn class="rounded-borders q-px-md" color="green-2" text-color="green-7" label="افزودن" unelevated
-                   dense/>
-          </router-link>
-
-          <q-separator inset vertical class="q-mx-sm"/>
-
-          <!-- import excel-->
+        <q-input class="flow-grid-search" outlined v-model:model-value="pagination.filter"
+                 :class="[!!pagination.filter && data.length>0?'positive-border':undefined]"
+                 placeholder="جستجو در رکوردها" clearable dense debounce="300" @update:model-value="getData">
+          <template v-slot:prepend><q-icon name="search" color="grey-6"/></template>
+        </q-input>
+        <div class="flow-grid-actions">
           <q-file ref="file" v-model:model-value="file" @update:model-value="importData" accept=".xls,.xlsx" style="display: none"/>
-          <router-link style="text-decoration: none" tag="div" :to="`/flow/import/${formName}`">
-            <q-btn class="rounded-borders" icon="backup" color="teal-2" text-color="teal-7" unelevated dense/>
-          </router-link>
-
-
-          <!-- export excel -->
-          <q-btn class="rounded-borders" icon="description" color="teal-2" text-color="teal-7" unelevated
-                 @click="excel" :loading="isExcelLoading" dense/>
-
-          <!-- space -->
-          <div class="q-pr-xs"/>
-
-          <!-- reload -->
-          <q-btn class="rounded-borders" icon="refresh" color="light-blue-2" text-color="light-blue-7" unelevated
-                 @click="getData"
-                 dense/>
-
+          <q-btn class="flow-action-primary" unelevated no-caps icon="add" label="افزودن رکورد" :to="`/flow/${formName}/0`"/>
+          <q-btn flat round dense icon="file_upload" class="flow-icon-button" :to="`/flow/import/${formName}`">
+            <q-tooltip>ورود از Excel</q-tooltip>
+          </q-btn>
+          <q-btn flat round dense icon="file_download" class="flow-icon-button" @click="excel" :loading="isExcelLoading">
+            <q-tooltip>خروجی Excel</q-tooltip>
+          </q-btn>
+          <q-btn flat round dense icon="refresh" class="flow-icon-button" @click="getData">
+            <q-tooltip>بروزرسانی</q-tooltip>
+          </q-btn>
         </div>
-
-      </q-toolbar>
+      </div>
     </template>
 
 
@@ -120,16 +83,14 @@
 
         <!-- view -->
         <div>
-          <q-btn class="rounded-borders" size="0.9rem" padding="2px 2px" icon="drive_file_rename_outline"
-                 color="light-blue-2"
-                 text-color="light-blue-7" unelevated dense @click="logProps(props)"
+          <q-btn class="flow-icon-button" size="0.9rem" padding="5px" icon="edit"
+                 flat round dense @click="logProps(props)"
                  :to="`/flow/${formName}/${props.row.Id}`"/>
         </div>
 
         <!-- delete -->
         <div>
-          <q-btn class="rounded-borders" size="0.9rem" padding="2px 2px" icon="delete_forever" color="pink-2"
-                 text-color="pink-7" unelevated dense>
+          <q-btn class="flow-delete-button" size="0.9rem" padding="5px" icon="delete_outline" flat round dense>
             <q-popup-proxy>
               <q-banner dense inline-actions class="items-center">
                 <template v-slot:avatar>
@@ -406,10 +367,36 @@ export default defineComponent({
   border-color: $positive !important;
 }
 
+.flow-grid-toolbar {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) minmax(220px, 1.2fr) auto;
+  align-items: center;
+  gap: 18px;
+}
+.flow-grid-title-wrap { display: flex; align-items: center; gap: 11px; min-width: 0; }
+.flow-grid-icon { display: grid; place-items: center; width: 38px; height: 38px; flex: 0 0 auto; border-radius: 11px; color: #5148d9; background: #f0efff; font-size: 20px; }
+.flow-grid-title { color: #293449; font-size: 15px; font-weight: 700; }
+.flow-grid-subtitle { color: #8993a5; font-size: 11px; }
+.flow-grid-search .q-field__control { background: #fff; border-radius: 10px; }
+.flow-grid-actions { display: flex; align-items: center; gap: 5px; }
+.flow-delete-button { color: #b34b53; }
+.flow-delete-button:hover { background: #fff0f0; }
+
 .grid-cell {
   max-width: 100px;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+
+@media (max-width: 900px) {
+  .flow-grid-toolbar { grid-template-columns: 1fr auto; gap: 12px; }
+  .flow-grid-search { grid-column: 1 / -1; grid-row: 2; }
+}
+@media (max-width: 540px) {
+  .flow-grid-toolbar { grid-template-columns: 1fr; }
+  .flow-grid-actions { justify-content: space-between; }
+  .flow-grid-actions .q-btn:first-of-type { flex: 1; }
 }
 </style>
 

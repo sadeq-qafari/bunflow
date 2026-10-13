@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh LpR fFf">
+  <q-layout view="hHh LpR fFf" class="flow-designer-layout">
 
     <!-- element list -->
     <q-drawer v-model="right" side="left" bordered behavior="desktop" :breakpoint="0">
@@ -33,10 +33,10 @@
 
     <!-- body -->
     <q-page-container>
-      <q-page class="column full-width q-pa-md q-gutter-y-md">
+      <q-page class="column full-width q-pa-md q-gutter-y-md flow-designer-page">
 
         <!-- form header -->
-        <div class="row full-width border-radius bg-white q-pa-md justify-between items-center">
+        <div class="row full-width flow-designer-toolbar q-pa-md justify-between items-center">
 
           <!-- title -->
           <div class="text-subtitle1 text-black">
@@ -49,13 +49,13 @@
 
             <!-- submit -->
             <div class="col">
-              <q-btn class="full-width border-radius" color="cyan-2" text-color="cyan-7" label="ذخیره" unelevated
+            <q-btn class="full-width flow-action-primary" label="ذخیره فرم" unelevated
                      @click="submitForm"/>
             </div>
 
             <!-- return -->
             <div class="col">
-              <q-btn class="full-width border-radius" color="pink-2" text-color="pink-7" label="بازگشت" unelevated
+            <q-btn class="full-width flow-secondary-button" label="بازگشت" unelevated
                      @click="$navigateBack"/>
             </div>
 
@@ -64,7 +64,7 @@
         </div>
 
         <!-- grid -->
-        <div class="column full-width border-radius bg-white">
+        <div class="column full-width flow-designer-canvas">
 
           <!-- layout -->
           <grid-layout
@@ -173,7 +173,7 @@
 
         <!-- info -->
         <div class="column full-width border-radius">
-          <q-banner class="text-white bg-pink rounded-borders q-mb-sm" v-for="error of errors">
+          <q-banner class="flow-designer-error rounded-borders q-mb-sm" v-for="error of errors">
             <template v-slot:avatar>
               <q-icon name="info" color="white"/>
             </template>
@@ -938,14 +938,14 @@ export default {
 
 .element {
   transition: 0.2s;
-  border: 2px solid $grey-2;
+  border: 1px solid #e5e9f1;
   user-select: none;
   box-sizing: border-box !important;
 
   .icon {
     transition: 0.2s;
     background-color: white;
-    color: $cyan;
+    color: $primary;
   }
 
   .add {
@@ -956,12 +956,12 @@ export default {
 
 .element:hover {
   transition: 0.2s;
-  border: 2px solid $cyan;
+  border: 1px solid $primary;
   user-select: none;
 
   .icon {
     transition: 0.2s;
-    background-color: $cyan;
+    background-color: $primary;
     color: white;
   }
 
@@ -998,6 +998,19 @@ export default {
 .text-primary-hover:hover {
   transition: 0.2s;
   color: $primary;
+}
+
+.flow-designer-layout, .flow-designer-page { background: #f5f7fb; }
+.flow-designer-toolbar, .flow-designer-canvas { background: #fff; border: 1px solid #e5e9f1; border-radius: 14px; }
+.flow-designer-toolbar { box-shadow: 0 3px 12px rgba(24, 39, 75, .035); }
+.flow-designer-canvas { overflow: hidden; }
+.flow-designer-error { color: #a43f47; background: #fff2f2; border: 1px solid #f4d5d7; }
+.flow-secondary-button { background: #f0f2f7; color: #59657a; }
+
+@media (max-width: 700px) {
+  .flow-designer-page { padding: 12px; }
+  .flow-designer-toolbar { gap: 12px; }
+  .flow-designer-toolbar > .row.col-4 { width: 100%; flex: 0 0 100%; }
 }
 </style>
 

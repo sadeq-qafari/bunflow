@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-pa-md column">
+  <q-page class="flow-page column">
     <f-data-grid :form-name="formName" v-if="show && formsLoaded"/>
     <q-skeleton v-else height="300px" width="100%" class="bg-blue-grey-1 full-width border-radius"></q-skeleton>
   </q-page>

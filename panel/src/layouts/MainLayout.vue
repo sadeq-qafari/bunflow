@@ -74,7 +74,7 @@ export default {
   data() {
     return {
       classicSidebar: false,
-      left: true,
+      left: false,
       right: false,
       jalaliDate: moment()
         .locale("fa")
@@ -126,6 +126,10 @@ export default {
     },
   },
   watch: {
+    '$q.screen.width'(width, previousWidth) {
+      if (width <= 850) this.left = false
+      else if (previousWidth <= 850) this.left = true
+    },
     right(to, from) {
       if (to === false) {
         this.$store.commit("clearChatProps");
@@ -138,6 +142,7 @@ export default {
     },
   },
   async mounted() {
+    this.left = this.$q.screen.width > 850
     if (this.$q.localStorage.has('classicMenu')) {
       this.classicSidebar = this.$q.localStorage.getItem('classicMenu')
     }
